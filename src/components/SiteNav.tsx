@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 const SECTIONS = [
   { id: "hero", label: "home" },
@@ -9,9 +9,11 @@ const SECTIONS = [
   { id: "contact", label: "contact" },
 ];
 
+const NAV_ITEMS = SECTIONS.slice(1);
+
 export function SiteNav() {
-  const indicatorRef = useRef<HTMLDivElement>(null);
-  const activeRef = useRef<string>("hero");
+  const [active, setActive] = useState("hero");
+  const [hovered, setHovered] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
 
   function scrollTo(id: string) {
@@ -20,29 +22,15 @@ export function SiteNav() {
     setMenuOpen(false);
   }
 
-  // Highlight active section on scroll
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            activeRef.current = entry.target.id;
-            document.querySelectorAll("[data-nav-item]").forEach((el) => {
-              const pill = el as HTMLElement;
-              if (pill.dataset.navItem === entry.target.id) {
-                pill.classList.add("bg-white/15", "text-white");
-                pill.classList.remove("text-white/60");
-              } else {
-                pill.classList.remove("bg-white/15", "text-white");
-                pill.classList.add("text-white/60");
-              }
-            });
-          }
+          if (entry.isIntersecting) setActive(entry.target.id);
         });
       },
-      { rootMargin: "-40% 0px -40% 0px" }
+      { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
     );
-
     SECTIONS.forEach(({ id }) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
@@ -50,7 +38,6 @@ export function SiteNav() {
     return () => observer.disconnect();
   }, []);
 
-  // Close menu on outside click
   useEffect(() => {
     if (!menuOpen) return;
     const close = () => setMenuOpen(false);
@@ -59,42 +46,58 @@ export function SiteNav() {
   }, [menuOpen]);
 
   return (
-    <nav className="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-[min(96vw,740px)]">
+    <nav className="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-[min(96vw,580px)]">
       {/* Main pill */}
-      <div className="liquid-glass rounded-full px-3 py-2 flex items-center justify-between">
-        <button
-          onClick={() => scrollTo("hero")}
-          className="px-4 py-1.5 text-white tracking-wide"
-          style={{ fontFamily: "'Instrument Serif', serif", fontSize: "20px" }}
-        >
-          sneha
-        </button>
-
-        {/* Desktop nav — hidden on small screens */}
-        <ul className="hidden sm:flex items-center gap-1">
-          {SECTIONS.slice(1).map((s) => (
-            <li key={s.id}>
-              <button
-                data-nav-item={s.id}
-                onClick={() => scrollTo(s.id)}
-                className="px-3 py-1.5 text-xs uppercase tracking-[0.18em] rounded-full transition text-white/60 hover:text-white"
-              >
-                {s.label}
-              </button>
-            </li>
-          ))}
+      <div className="liquid-glass rounded-full px-3 py-2 flex items-center justify-center">
+        {/* Desktop nav */}
+        <ul className="hidden sm:flex items-center gap-0.5">
+          {NAV_ITEMS.map((s) => {
+            const isActive = active === s.id;
+            const isHovered = hovered === s.id;
+            return (
+              <li key={s.id}>
+                <button
+                  onClick={() => scrollTo(s.id)}
+                  onMouseEnter={() => setHovered(s.id)}
+                  onMouseLeave={() => setHovered(null)}
+                  className="px-3.5 py-1.5 text-xs uppercase tracking-[0.18em] rounded-full"
+                  style={{
+                    color: isActive
+                      ? "rgba(255,255,255,0.95)"
+                      : isHovered
+                      ? "rgba(255,255,255,0.8)"
+                      : "rgba(255,255,255,0.4)",
+                    background: isActive
+                      ? "rgba(255,255,255,0.12)"
+                      : isHovered
+                      ? "rgba(255,255,255,0.07)"
+                      : "transparent",
+                    transition: "color 0.2s ease, background 0.2s ease",
+                  }}
+                >
+                  {s.label}
+                </button>
+              </li>
+            );
+          })}
         </ul>
 
-        {/* Mobile hamburger — visible only on small screens */}
-        <button
-          className="sm:hidden px-3 py-1.5 text-white/70 hover:text-white transition-colors text-lg leading-none"
-          onClick={(e) => { e.stopPropagation(); setMenuOpen((o) => !o); }}
-          aria-label="Toggle menu"
-        >
-          {menuOpen ? "✕" : "☰"}
-        </button>
-
-        <div ref={indicatorRef} />
+        {/* Mobile: active section label + hamburger */}
+        <div className="sm:hidden flex items-center justify-between w-full px-2">
+          <span className="text-xs uppercase tracking-[0.25em] text-white/60">
+            {NAV_ITEMS.find((s) => s.id === active)?.label ?? "menu"}
+          </span>
+          <button
+            className="px-2 py-1.5 text-white/70 hover:text-white transition-colors text-lg leading-none"
+            onClick={(e) => {
+              e.stopPropagation();
+              setMenuOpen((o) => !o);
+            }}
+            aria-label="Toggle menu"
+          >
+            {menuOpen ? "✕" : "☰"}
+          </button>
+        </div>
       </div>
 
       {/* Mobile dropdown */}
@@ -103,12 +106,16 @@ export function SiteNav() {
           className="sm:hidden mt-2 liquid-glass rounded-2xl overflow-hidden"
           onClick={(e) => e.stopPropagation()}
         >
-          {SECTIONS.slice(1).map((s) => (
+          {NAV_ITEMS.map((s) => (
             <button
               key={s.id}
-              data-nav-item={s.id}
               onClick={() => scrollTo(s.id)}
-              className="w-full text-left px-5 py-3.5 text-sm uppercase tracking-[0.2em] text-white/60 hover:text-white hover:bg-white/5 transition-colors border-b border-white/5 last:border-0"
+              className="w-full text-left px-5 py-3.5 text-sm uppercase tracking-[0.2em] border-b border-white/5 last:border-0"
+              style={{
+                color: active === s.id ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.5)",
+                background: active === s.id ? "rgba(255,255,255,0.06)" : "transparent",
+                transition: "color 0.2s, background 0.2s",
+              }}
             >
               {s.label}
             </button>

@@ -28,40 +28,21 @@ const ROLES = [
 
 function RoleRotator() {
   const [index, setIndex] = useState(0);
-  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    let swapTimer: ReturnType<typeof setTimeout>;
     const timer = setInterval(() => {
-      setVisible(false);
-      swapTimer = setTimeout(() => {
-        setIndex((i) => (i + 1) % ROLES.length);
-        setVisible(true);
-      }, 500);
+      setIndex((i) => (i + 1) % ROLES.length);
     }, 3200);
-    return () => {
-      clearInterval(timer);
-      clearTimeout(swapTimer);
-    };
+    return () => clearInterval(timer);
   }, []);
 
   return (
     <div className="hero-text mt-4 mb-1 flex items-center justify-center" style={{ minHeight: "3.5rem" }}>
       <div className="flex items-center gap-1.5">
         <span
-          className="text-2xl sm:text-3xl md:text-4xl font-normal"
-          style={{
-            fontFamily: "'Instrument Serif', serif",
-            background: "linear-gradient(135deg, #ffd97a 0%, #f5c542 40%, #e89b1a 100%)",
-            WebkitBackgroundClip: "text",
-            backgroundClip: "text",
-            color: "transparent",
-            display: "inline-block",
-            transition: "opacity 0.45s ease, transform 0.45s ease",
-            opacity: visible ? 1 : 0,
-            transform: visible ? "translateY(0px)" : "translateY(-10px)",
-            textShadow: "0 0 40px rgba(245,197,66,0.25)",
-          }}
+          key={index}
+          className="role-text text-2xl sm:text-3xl md:text-4xl font-normal"
+          style={{ fontFamily: "'Instrument Serif', serif" }}
         >
           {ROLES[index]}
         </span>
@@ -80,7 +61,8 @@ function RoleRotator() {
 
 function HeroSection() {
   return (
-    <section id="hero" className="relative h-screen w-full overflow-hidden">
+    <section id="hero" className="relative h-screen w-full overflow-hidden"
+      style={{ background: "linear-gradient(160deg, #0a0518 0%, #120a2c 55%, #0c1423 100%)" }}>
       <video
         autoPlay loop muted playsInline preload="auto"
         className="absolute inset-0 w-full h-full object-cover z-0"
@@ -91,7 +73,7 @@ function HeroSection() {
       <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/80 via-black/20 to-black/60 pointer-events-none" />
 
       <div className="relative z-20 h-full flex flex-col items-center justify-start pt-[18vh] text-center px-6">
-        <p className="hero-text text-[10px] sm:text-xs uppercase tracking-[0.4em] text-white/70 mb-3 font-medium">
+        <p className="hero-text text-sm sm:text-base md:text-lg uppercase tracking-[0.55em] text-white/90 mb-3 font-medium">
           Sneha Chouksey
         </p>
 
@@ -113,18 +95,27 @@ function HeroSection() {
           full-stack products — and own them end-to-end as a product manager.
         </p>
 
-        <div className="hero-text mt-10 flex flex-col sm:flex-row gap-5 items-center">
+        {/* CTA — intentionally NOT hero-text so GSAP parallax doesn't touch it */}
+        <div className="hero-cta-wrap mt-10 flex flex-col sm:flex-row gap-5 items-center">
           <button
             onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
-            className="liquid-glass rounded-full px-8 py-3 text-sm text-white/90 hover:text-white hover:scale-[1.02] cursor-none transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+            className="hero-cta rounded-full px-8 py-3.5 text-sm font-medium text-white"
           >
             Explore the work
           </button>
           <button
-            onClick={() => document.getElementById("story")?.scrollIntoView({ behavior: "smooth" })}
-            className="text-xs text-white/70 hover:text-white uppercase tracking-[0.2em] transition-colors pb-1 border-b border-white/20 hover:border-white/60 cursor-none"
+            onClick={() => document.getElementById("experience")?.scrollIntoView({ behavior: "smooth" })}
+            className="group flex items-center gap-2 text-sm text-white/55 hover:text-white/95 uppercase tracking-[0.2em] transition-all duration-300"
           >
-            Read my story
+            <span className="pb-px border-b border-white/20 group-hover:border-[rgba(255,217,122,0.55)] transition-colors duration-300">
+              See my journey
+            </span>
+            <span
+              className="inline-block transition-transform duration-300 group-hover:translate-x-1"
+              style={{ color: "var(--petal)", opacity: 0.5 }}
+            >
+              →
+            </span>
           </button>
         </div>
 
@@ -552,7 +543,7 @@ function ExperienceSection() {
       <div id="ch3-s1" className="absolute inset-0 flex items-center justify-center pointer-events-none"
         style={{ opacity: 0, visibility: "hidden" }}>
         <div style={{ ...glass, padding: "clamp(24px,5vw,52px) clamp(20px,6vw,64px)", maxWidth: "min(600px,calc(100vw - 2.5rem))", textAlign: "center" }}>
-          <p style={{ fontFamily: serif, fontSize: "11px", letterSpacing: "0.55em",
+          <p style={{ fontFamily: serif, fontSize: "13px", letterSpacing: "0.45em",
             textTransform: "uppercase", color: "rgba(255,217,122,0.7)", marginBottom: "20px" }}>
             Chapter III
           </p>
@@ -573,8 +564,8 @@ function ExperienceSection() {
       <div id="ch3-s2" className="absolute inset-0 flex items-center justify-end pointer-events-none"
         style={{ padding: "0 6vw", opacity: 0, visibility: "hidden" }}>
         <div style={{ ...glass, padding: "clamp(22px,4vw,44px) clamp(20px,5vw,52px)", maxWidth: "min(420px,calc(100vw - 2.5rem))" }}>
-          <p style={{ fontFamily: serif, fontSize: "10px", letterSpacing: "0.5em",
-            textTransform: "uppercase", color: "rgba(255,217,122,0.65)", marginBottom: "16px" }}>
+          <p style={{ fontFamily: serif, fontSize: "13px", letterSpacing: "0.35em",
+            textTransform: "uppercase", color: "rgba(255,217,122,0.75)", marginBottom: "16px" }}>
             B.Tech CSE &nbsp;·&nbsp; 2023–2027
           </p>
           <div style={{ ...accentLine, width: "40px" }} />
@@ -594,8 +585,8 @@ function ExperienceSection() {
       <div id="ch3-s3" className="absolute inset-0 flex items-center pointer-events-none"
         style={{ padding: "0 6vw", opacity: 0, visibility: "hidden" }}>
         <div style={{ ...glass, padding: "clamp(22px,4vw,44px) clamp(20px,5vw,52px)", maxWidth: "min(500px,calc(100vw - 2.5rem))" }}>
-          <p style={{ fontFamily: serif, fontSize: "10px", letterSpacing: "0.5em",
-            textTransform: "uppercase", color: "rgba(255,217,122,0.65)", marginBottom: "16px" }}>
+          <p style={{ fontFamily: serif, fontSize: "13px", letterSpacing: "0.35em",
+            textTransform: "uppercase", color: "rgba(255,217,122,0.75)", marginBottom: "16px" }}>
             Jan 2026 – Present
           </p>
           <div style={accentLine} />
@@ -621,8 +612,8 @@ function ExperienceSection() {
         <div style={{ ...glass, padding: "clamp(16px,3vw,28px) clamp(16px,4vw,40px)", display: "flex", alignItems: "center", gap: "clamp(16px,3vw,32px)" }}>
           <div style={{ width: "4px", height: "56px", background: "linear-gradient(to bottom,#ffd97a,#e89b1a)", borderRadius: "2px", flexShrink: 0 }} />
           <div>
-            <p style={{ fontFamily: serif, fontSize: "10px", letterSpacing: "0.5em",
-              textTransform: "uppercase", color: "rgba(255,217,122,0.65)", marginBottom: "8px" }}>
+            <p style={{ fontFamily: serif, fontSize: "13px", letterSpacing: "0.35em",
+              textTransform: "uppercase", color: "rgba(255,217,122,0.75)", marginBottom: "8px" }}>
               Project · Shipped
             </p>
             <h3 style={{ fontFamily: serif, fontSize: "clamp(26px,3vw,42px)", color: "#fff",
@@ -642,8 +633,8 @@ function ExperienceSection() {
         <div style={{ ...glass, padding: "clamp(16px,3vw,28px) clamp(16px,4vw,40px)", display: "flex", alignItems: "center", gap: "clamp(16px,3vw,32px)" }}>
           <div style={{ width: "4px", height: "56px", background: "linear-gradient(to bottom,#ffd97a,#e89b1a)", borderRadius: "2px", flexShrink: 0 }} />
           <div>
-            <p style={{ fontFamily: serif, fontSize: "10px", letterSpacing: "0.5em",
-              textTransform: "uppercase", color: "rgba(255,217,122,0.65)", marginBottom: "8px" }}>
+            <p style={{ fontFamily: serif, fontSize: "13px", letterSpacing: "0.35em",
+              textTransform: "uppercase", color: "rgba(255,217,122,0.75)", marginBottom: "8px" }}>
               Project · Scaled
             </p>
             <h3 style={{ fontFamily: serif, fontSize: "clamp(26px,3vw,42px)", color: "#fff",
@@ -663,8 +654,8 @@ function ExperienceSection() {
         <div style={{ ...glass, padding: "clamp(16px,3vw,28px) clamp(16px,4vw,40px)", display: "flex", alignItems: "center", gap: "clamp(16px,3vw,32px)" }}>
           <div style={{ width: "4px", height: "56px", background: "linear-gradient(to bottom,#ffd97a,#e89b1a)", borderRadius: "2px", flexShrink: 0 }} />
           <div>
-            <p style={{ fontFamily: serif, fontSize: "10px", letterSpacing: "0.5em",
-              textTransform: "uppercase", color: "rgba(255,217,122,0.65)", marginBottom: "8px" }}>
+            <p style={{ fontFamily: serif, fontSize: "13px", letterSpacing: "0.35em",
+              textTransform: "uppercase", color: "rgba(255,217,122,0.75)", marginBottom: "8px" }}>
               Project · Agentic
             </p>
             <h3 style={{ fontFamily: serif, fontSize: "clamp(26px,3vw,42px)", color: "#fff",
@@ -682,8 +673,8 @@ function ExperienceSection() {
       <div id="ch3-s4" className="absolute inset-0 flex items-center justify-center pointer-events-none"
         style={{ opacity: 0, visibility: "hidden" }}>
         <div style={{ ...glass, padding: "clamp(24px,5vw,52px) clamp(20px,6vw,64px)", maxWidth: "min(680px,calc(100vw - 2.5rem))", textAlign: "center" }}>
-          <p style={{ fontFamily: serif, fontSize: "10px", letterSpacing: "0.55em",
-            textTransform: "uppercase", color: "rgba(255,217,122,0.7)", marginBottom: "16px" }}>
+          <p style={{ fontFamily: serif, fontSize: "13px", letterSpacing: "0.4em",
+            textTransform: "uppercase", color: "rgba(255,217,122,0.8)", marginBottom: "16px" }}>
             Recognition
           </p>
           <div style={{ ...accentLine, margin: "0 auto 24px" }} />
@@ -691,32 +682,32 @@ function ExperienceSection() {
             lineHeight: 0.95, textShadow: "0 4px 40px rgba(0,0,0,0.7)", marginBottom: "12px" }}>
             Milestones
           </h2>
-          <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "14px", marginBottom: "36px",
-            letterSpacing: "0.1em" }}>
+          <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "16px", marginBottom: "36px",
+            letterSpacing: "0.05em" }}>
             Recognition earned through building.
           </p>
           <div style={{ display: "flex", gap: "0", borderRadius: "16px", overflow: "hidden",
             border: "1px solid rgba(255,255,255,0.08)" }}>
             <div style={{ flex: 1, padding: "28px 32px",
               background: "rgba(255,217,122,0.06)", borderRight: "1px solid rgba(255,255,255,0.08)" }}>
-              <p style={{ fontFamily: serif, fontSize: "9px", letterSpacing: "0.4em",
-                textTransform: "uppercase", color: "rgba(255,217,122,0.6)", marginBottom: "10px" }}>
+              <p style={{ fontFamily: serif, fontSize: "12px", letterSpacing: "0.3em",
+                textTransform: "uppercase", color: "rgba(255,217,122,0.8)", marginBottom: "10px" }}>
                 CodeHunt Hackathon
               </p>
               <p style={{ fontFamily: serif, fontSize: "26px", color: "#fff", marginBottom: "4px" }}>
                 1st Runner-Up
               </p>
-              <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "12px" }}>Among 100 teams</p>
+              <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "14px" }}>Among 100 teams</p>
             </div>
             <div style={{ flex: 1, padding: "28px 32px", background: "rgba(255,217,122,0.04)" }}>
-              <p style={{ fontFamily: serif, fontSize: "9px", letterSpacing: "0.4em",
-                textTransform: "uppercase", color: "rgba(255,217,122,0.6)", marginBottom: "10px" }}>
+              <p style={{ fontFamily: serif, fontSize: "12px", letterSpacing: "0.3em",
+                textTransform: "uppercase", color: "rgba(255,217,122,0.8)", marginBottom: "10px" }}>
                 Smart India Hackathon
               </p>
               <p style={{ fontFamily: serif, fontSize: "26px", color: "#fff", marginBottom: "4px" }}>
                 Top 5 <span style={{ fontSize: "16px", color: "rgba(255,255,255,0.55)" }}>(internally)</span>
               </p>
-              <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "12px" }}>Full-stack AI under pressure</p>
+              <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "14px" }}>Full-stack AI under pressure</p>
             </div>
           </div>
         </div>
@@ -756,73 +747,19 @@ function ResumeSection() {
       className="relative"
       style={{ background: "transparent" }}
     >
-      <div className="relative z-10 max-w-5xl mx-auto px-6 sm:px-10 py-20">
-
-        {/* ── Side-by-side: Resume card + GitHub calendar ── */}
-        <div className="reveal grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-5 items-stretch">
-
-          {/* Left — Resume card */}
-          <div
-            className="card-3d flex flex-col justify-between p-8 rounded-3xl relative overflow-hidden"
-            style={{ border: "1px solid rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.025)" }}
-          >
-            {/* Glow */}
-            <div
-              className="absolute -top-12 -right-12 w-44 h-44 rounded-full blur-3xl opacity-10 pointer-events-none"
-              style={{ background: "var(--gradient-sun)" }}
-            />
-            {/* Accent line */}
-            <div
-              className="absolute top-0 left-8 right-8 h-px"
-              style={{ background: "linear-gradient(to right, transparent, rgba(245,197,66,0.2), transparent)" }}
-            />
-
-            <div className="relative z-10">
-              <p className="text-[9px] uppercase tracking-[0.5em] text-[var(--petal)]/60 mb-4">
-                Full résumé
-              </p>
-              <h3 className="text-3xl text-white leading-tight mb-3" style={{ fontFamily: "'Instrument Serif', serif" }}>
-                See the full<br />picture.
-              </h3>
-              <p className="text-white/40 text-sm leading-relaxed">
-                Projects, stack, experience — all in one document.
-              </p>
-            </div>
-
-            <a
-              href="https://drive.google.com/file/d/1y2Pm0xKcTJupfNkYyfYARbgE_7bVRdlN/view?usp=sharing"
-              target="_blank"
-              rel="noreferrer"
-              className="relative z-10 mt-8 flex items-center gap-3 px-6 py-3 rounded-full transition-all duration-300 text-sm self-start"
-              style={{
-                border: "1px solid rgba(255,217,122,0.35)",
-                color: "var(--petal)",
-                background: "rgba(255,217,122,0.05)",
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.background = "rgba(255,217,122,0.12)";
-                (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,217,122,0.6)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.background = "rgba(255,217,122,0.05)";
-                (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,217,122,0.35)";
-              }}
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                <polyline points="14 2 14 8 20 8"/>
-                <line x1="12" y1="11" x2="12" y2="17"/>
-                <polyline points="9 14 12 17 15 14"/>
-              </svg>
-              View Résumé ↗
-            </a>
+      <div className="relative z-10 max-w-5xl mx-auto px-6 sm:px-10 pt-10 pb-20">
+        <div className="reveal mb-8 flex items-end justify-between flex-wrap gap-4">
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.4em] text-[var(--petal)]/60 mb-2">
+              Open Source · Activity
+            </p>
+            <h2 className="text-3xl sm:text-4xl text-white" style={{ fontFamily: "'Instrument Serif', serif" }}>
+              Contribution Graph
+            </h2>
           </div>
-
-          {/* Right — GitHub activity */}
-          <GitHubStats />
-
         </div>
-
+        {/* GitHub activity — NOT wrapped in .reveal so GSAP transform doesn't break portal tooltip */}
+        <GitHubStats />
       </div>
     </section>
   );
@@ -893,8 +830,44 @@ function ContactSection() {
         <p className="reveal text-white/50 max-w-md mt-8 text-base leading-[1.9]">
           Open to AI engineering, agentic AI work, full-stack roles, and the occasional ambitious idea over coffee.
         </p>
+
+        {/* Résumé CTA */}
+        <div className="reveal mt-8">
+          <a
+            href="https://drive.google.com/file/d/1y2Pm0xKcTJupfNkYyfYARbgE_7bVRdlN/view?usp=sharing"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-sm font-medium transition-all duration-300"
+            style={{
+              border: "1px solid rgba(255,217,122,0.35)",
+              color: "var(--petal)",
+              background: "rgba(255,217,122,0.05)",
+            }}
+            onMouseEnter={(e) => {
+              const el = e.currentTarget as HTMLElement;
+              el.style.background = "rgba(255,217,122,0.12)";
+              el.style.borderColor = "rgba(255,217,122,0.6)";
+              el.style.transform = "translateY(-1px)";
+            }}
+            onMouseLeave={(e) => {
+              const el = e.currentTarget as HTMLElement;
+              el.style.background = "rgba(255,217,122,0.05)";
+              el.style.borderColor = "rgba(255,217,122,0.35)";
+              el.style.transform = "";
+            }}
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="12" y1="11" x2="12" y2="17"/>
+              <polyline points="9 14 12 17 15 14"/>
+            </svg>
+            View Résumé
+          </a>
+        </div>
+
         {/* Icon-only social links */}
-        <div className="reveal mt-14 flex items-center gap-4">
+        <div className="reveal mt-10 flex items-center gap-4">
           {socials.map((s) => (
             <a
               key={s.label}
@@ -983,11 +956,6 @@ function HomePage() {
       }
     );
 
-    // ── Hero text parallax ───────────────────────────────────────────────────
-    gsap.to(".hero-text", {
-      y: -70, ease: "none",
-      scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: true },
-    });
 
     // ── Story petals parallax ────────────────────────────────────────────────
     gsap.to(".story-petals", {

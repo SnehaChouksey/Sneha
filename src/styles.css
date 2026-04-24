@@ -384,6 +384,7 @@ html.lenis, html.lenis body {
 
 /* ── Hero text animation ── */
 .hero-text {
+  opacity: 0;
   animation: fade-rise 0.9s ease-out both;
 }
 .hero-text:nth-child(1) { animation-delay: 0.1s; }
@@ -526,6 +527,34 @@ a:hover .contact-link-line {
   animation: spin-slow 20s linear infinite;
 }
 
+/* ── Hero CTA container — separate from hero-text so GSAP never touches it ── */
+.hero-cta-wrap {
+  /* Same entrance timing as the 5th hero-text child would have had */
+  animation: fade-rise 0.9s ease-out 0.65s both;
+}
+
+/* ── Hero CTA primary button — pure CSS hover, no JS transform fights ── */
+.hero-cta {
+  background: linear-gradient(135deg, rgba(245,197,66,0.12) 0%, rgba(232,155,26,0.08) 100%);
+  border: 1px solid rgba(245,197,66,0.35);
+  box-shadow: 0 0 24px rgba(245,197,66,0.08), inset 0 1px 0 rgba(255,255,255,0.08);
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.22s ease,
+              border-color 0.22s ease,
+              background 0.22s ease;
+}
+.hero-cta:hover {
+  transform: scale(1.04) translateY(-2px);
+  box-shadow: 0 0 48px rgba(245,197,66,0.28), 0 12px 32px rgba(0,0,0,0.4),
+              inset 0 1px 0 rgba(255,255,255,0.12);
+  border-color: rgba(245,197,66,0.65);
+  background: linear-gradient(135deg, rgba(245,197,66,0.2) 0%, rgba(232,155,26,0.14) 100%);
+}
+.hero-cta:active {
+  transform: scale(0.98) translateY(0);
+  transition-duration: 0.1s;
+}
+
 /* ── Role rotator cursor blink ── */
 .role-cursor {
   animation: blink-cursor 1.1s step-end infinite;
@@ -534,6 +563,20 @@ a:hover .contact-link-line {
 @keyframes blink-cursor {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
+}
+
+/* ── Role text slide-in (key-based remount triggers this) ── */
+@keyframes roleSlideIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+.role-text {
+  animation: roleSlideIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  display: inline-block;
+  background: linear-gradient(135deg, #ffd97a 0%, #f5c542 40%, #e89b1a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 /* ── Skill marquee ── */
