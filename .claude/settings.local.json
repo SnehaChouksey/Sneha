@@ -28,7 +28,8 @@
       "Bash(cd \"D:/projects/silent-rise-main\" && npx tsc --noEmit 2>&1 | tail -20)",
       "WebFetch(domain:raw.githubusercontent.com)",
       "Bash(cd \"D:\\\\projects\\\\silent-rise-main\" && npm run build 2>&1 | tail -30)",
-      "Bash(cd D:/projects/silent-rise-main && npm run build 2>&1 | tail -20)"
+      "Bash(cd D:/projects/silent-rise-main && npm run build 2>&1 | tail -20)",
+      "Bash(cd D:/projects/silent-rise-main && npm run build 2>&1 | grep -E \"error|warning|built|✓|✗\" | head -20)"
     ]
   },
   "enabledPlugins": {

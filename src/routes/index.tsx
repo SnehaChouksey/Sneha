@@ -15,16 +15,6 @@ const serif = { fontFamily: "'Instrument Serif', serif" };
 
 export const Route = createFileRoute("/")({
   component: HomePage,
-  head: () => ({
-    meta: [
-      { title: "Sneha Chouksey — AI Engineer & Product Manager" },
-      {
-        name: "description",
-        content:
-          "I build agentic AI systems, automation pipelines, full-stack products — and own them end-to-end as a product manager.",
-      },
-    ],
-  }),
 });
 
 // ─── Role Rotator ──────────────────────────────────────────────────────────────
@@ -329,14 +319,14 @@ function WorkSection() {
         </h2>
 
         {/* ── Bento grid ── */}
-        <div className="reveal mt-16 grid grid-cols-3 gap-4 auto-rows-auto">
+        <div className="reveal mt-16 grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-auto">
           {bentoDomains.map((d, i) => {
             const isLarge = d.size === "large";
             return (
               <div
                 key={d.title}
                 className={`work-card bento-cell card-3d rounded-3xl overflow-hidden relative group ${
-                  isLarge ? "col-span-2" : "col-span-1"
+                  isLarge ? "md:col-span-2" : "col-span-1"
                 }`}
                 style={{ minHeight: isLarge ? "240px" : "180px" }}
               >
@@ -561,7 +551,7 @@ function ExperienceSection() {
       {/* ════════ SCENE 1 — Chapter intro · center ════════ */}
       <div id="ch3-s1" className="absolute inset-0 flex items-center justify-center pointer-events-none"
         style={{ opacity: 0, visibility: "hidden" }}>
-        <div style={{ ...glass, padding: "52px 64px", maxWidth: "600px", textAlign: "center" }}>
+        <div style={{ ...glass, padding: "clamp(24px,5vw,52px) clamp(20px,6vw,64px)", maxWidth: "min(600px,calc(100vw - 2.5rem))", textAlign: "center" }}>
           <p style={{ fontFamily: serif, fontSize: "11px", letterSpacing: "0.55em",
             textTransform: "uppercase", color: "rgba(255,217,122,0.7)", marginBottom: "20px" }}>
             Chapter III
@@ -582,7 +572,7 @@ function ExperienceSection() {
       {/* ════════ SCENE 2 — College · right panel ════════ */}
       <div id="ch3-s2" className="absolute inset-0 flex items-center justify-end pointer-events-none"
         style={{ padding: "0 6vw", opacity: 0, visibility: "hidden" }}>
-        <div style={{ ...glass, padding: "44px 52px", maxWidth: "420px" }}>
+        <div style={{ ...glass, padding: "clamp(22px,4vw,44px) clamp(20px,5vw,52px)", maxWidth: "min(420px,calc(100vw - 2.5rem))" }}>
           <p style={{ fontFamily: serif, fontSize: "10px", letterSpacing: "0.5em",
             textTransform: "uppercase", color: "rgba(255,217,122,0.65)", marginBottom: "16px" }}>
             B.Tech CSE &nbsp;·&nbsp; 2023–2027
@@ -603,7 +593,7 @@ function ExperienceSection() {
       {/* ════════ SCENE 3 — Omysha · left panel ════════ */}
       <div id="ch3-s3" className="absolute inset-0 flex items-center pointer-events-none"
         style={{ padding: "0 6vw", opacity: 0, visibility: "hidden" }}>
-        <div style={{ ...glass, padding: "44px 52px", maxWidth: "500px" }}>
+        <div style={{ ...glass, padding: "clamp(22px,4vw,44px) clamp(20px,5vw,52px)", maxWidth: "min(500px,calc(100vw - 2.5rem))" }}>
           <p style={{ fontFamily: serif, fontSize: "10px", letterSpacing: "0.5em",
             textTransform: "uppercase", color: "rgba(255,217,122,0.65)", marginBottom: "16px" }}>
             Jan 2026 – Present
@@ -628,7 +618,7 @@ function ExperienceSection() {
       {/* ════════ SCENE P1 — Zoom Agent · bottom bar ════════ */}
       <div id="ch3-p1" className="absolute bottom-0 left-0 right-0 pointer-events-none"
         style={{ padding: "0 6vw 6vh", opacity: 0, visibility: "hidden" }}>
-        <div style={{ ...glass, padding: "28px 40px", display: "flex", alignItems: "center", gap: "32px" }}>
+        <div style={{ ...glass, padding: "clamp(16px,3vw,28px) clamp(16px,4vw,40px)", display: "flex", alignItems: "center", gap: "clamp(16px,3vw,32px)" }}>
           <div style={{ width: "4px", height: "56px", background: "linear-gradient(to bottom,#ffd97a,#e89b1a)", borderRadius: "2px", flexShrink: 0 }} />
           <div>
             <p style={{ fontFamily: serif, fontSize: "10px", letterSpacing: "0.5em",
@@ -649,7 +639,7 @@ function ExperienceSection() {
       {/* ════════ SCENE P2 — AI Contest · bottom bar ════════ */}
       <div id="ch3-p2" className="absolute bottom-0 left-0 right-0 pointer-events-none"
         style={{ padding: "0 6vw 6vh", opacity: 0, visibility: "hidden" }}>
-        <div style={{ ...glass, padding: "28px 40px", display: "flex", alignItems: "center", gap: "32px" }}>
+        <div style={{ ...glass, padding: "clamp(16px,3vw,28px) clamp(16px,4vw,40px)", display: "flex", alignItems: "center", gap: "clamp(16px,3vw,32px)" }}>
           <div style={{ width: "4px", height: "56px", background: "linear-gradient(to bottom,#ffd97a,#e89b1a)", borderRadius: "2px", flexShrink: 0 }} />
           <div>
             <p style={{ fontFamily: serif, fontSize: "10px", letterSpacing: "0.5em",
@@ -670,7 +660,7 @@ function ExperienceSection() {
       {/* ════════ SCENE P3 — Agentic AI · bottom bar ════════ */}
       <div id="ch3-p3" className="absolute bottom-0 left-0 right-0 pointer-events-none"
         style={{ padding: "0 6vw 6vh", opacity: 0, visibility: "hidden" }}>
-        <div style={{ ...glass, padding: "28px 40px", display: "flex", alignItems: "center", gap: "32px" }}>
+        <div style={{ ...glass, padding: "clamp(16px,3vw,28px) clamp(16px,4vw,40px)", display: "flex", alignItems: "center", gap: "clamp(16px,3vw,32px)" }}>
           <div style={{ width: "4px", height: "56px", background: "linear-gradient(to bottom,#ffd97a,#e89b1a)", borderRadius: "2px", flexShrink: 0 }} />
           <div>
             <p style={{ fontFamily: serif, fontSize: "10px", letterSpacing: "0.5em",
@@ -691,7 +681,7 @@ function ExperienceSection() {
       {/* ════════ SCENE 4 — Achievements · center ════════ */}
       <div id="ch3-s4" className="absolute inset-0 flex items-center justify-center pointer-events-none"
         style={{ opacity: 0, visibility: "hidden" }}>
-        <div style={{ ...glass, padding: "52px 64px", maxWidth: "680px", textAlign: "center" }}>
+        <div style={{ ...glass, padding: "clamp(24px,5vw,52px) clamp(20px,6vw,64px)", maxWidth: "min(680px,calc(100vw - 2.5rem))", textAlign: "center" }}>
           <p style={{ fontFamily: serif, fontSize: "10px", letterSpacing: "0.55em",
             textTransform: "uppercase", color: "rgba(255,217,122,0.7)", marginBottom: "16px" }}>
             Recognition

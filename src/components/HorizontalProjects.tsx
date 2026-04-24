@@ -39,10 +39,24 @@ export function HorizontalProjects() {
   const wrapRef = useRef<HTMLDivElement>(null);
   const stripRef = useRef<HTMLDivElement>(null);
   const [activeIdx, setActiveIdx] = useState(0);
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" ? window.innerWidth < 768 : false
+  );
 
+  // Mobile detection with resize listener
   useEffect(() => {
-    const wrap = wrapRef.current!;
-    const strip = stripRef.current!;
+    const check = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", check, { passive: true });
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  // GSAP horizontal scroll — desktop only
+  useEffect(() => {
+    if (isMobile) return;
+
+    const wrap = wrapRef.current;
+    const strip = stripRef.current;
+    if (!wrap || !strip) return;
 
     const ctx = gsap.context(() => {
       // ── Master horizontal tween ───────────────────────────────────────────
@@ -70,7 +84,6 @@ export function HorizontalProjects() {
         const num     = panel.querySelector<HTMLElement>(".panel-num");
         const imgEl   = panel.querySelector<HTMLElement>(".clip-reveal img");
 
-        // Image clip-path reveal (right panel slides in)
         if (imgWrap) {
           gsap.fromTo(
             imgWrap,
@@ -89,7 +102,6 @@ export function HorizontalProjects() {
           );
         }
 
-        // Image parallax inside the clip
         if (imgEl) {
           gsap.fromTo(
             imgEl,
@@ -108,7 +120,6 @@ export function HorizontalProjects() {
           );
         }
 
-        // Info panel slides in from left
         if (info) {
           gsap.fromTo(
             info,
@@ -128,7 +139,6 @@ export function HorizontalProjects() {
           );
         }
 
-        // Giant background number rises
         if (num) {
           gsap.fromTo(
             num,
@@ -151,8 +161,106 @@ export function HorizontalProjects() {
     }, wrap);
 
     return () => ctx.revert();
-  }, []);
+  }, [isMobile]);
 
+  // ── Mobile: vertical card stack ──────────────────────────────────────────
+  if (isMobile) {
+    return (
+      <div className="px-5 pb-16 space-y-6">
+        {projects.map((p) => (
+          <div
+            key={p.n}
+            className="rounded-2xl overflow-hidden relative"
+            style={{ background: p.bg, border: "1px solid rgba(255,255,255,0.06)" }}
+          >
+            {/* Ambient glow */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{ background: `radial-gradient(ellipse 70% 50% at 50% 0%, ${p.glow} 0%, transparent 70%)` }}
+            />
+
+            {/* Project image */}
+            {p.img && (
+              <div className="relative w-full" style={{ aspectRatio: "16/9", overflow: "hidden" }}>
+                <img
+                  src={p.img}
+                  alt={p.name}
+                  className="w-full h-full object-cover object-top"
+                  onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                />
+                <div
+                  className="absolute inset-0"
+                  style={{ background: "linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.85) 100%)" }}
+                />
+              </div>
+            )}
+
+            {/* Content */}
+            <div className="relative z-10 p-6">
+              <div className="flex items-center gap-3 mb-3">
+                <span className="w-6 h-px" style={{ background: "var(--petal)", opacity: 0.5 }} />
+                <p className="text-[9px] uppercase tracking-[0.5em]" style={{ color: "rgba(255,217,122,0.55)" }}>
+                  {p.role}
+                </p>
+              </div>
+
+              <h3 className="text-4xl text-white leading-tight mb-1" style={serif}>{p.name}</h3>
+              <p className="text-xs uppercase tracking-wider mb-4" style={{ color: "rgba(255,255,255,0.3)" }}>{p.tag}</p>
+              <p className="text-sm leading-[1.85] mb-5" style={{ color: "rgba(255,255,255,0.58)" }}>{p.body}</p>
+
+              {/* Stack pills */}
+              <div className="flex flex-wrap gap-2 mb-6">
+                {p.stack.map((s) => (
+                  <span
+                    key={s}
+                    className="text-[9px] px-3 py-1.5 rounded-full"
+                    style={{
+                      border: "1px solid rgba(255,255,255,0.1)",
+                      color: "rgba(255,255,255,0.48)",
+                      background: "rgba(255,255,255,0.04)",
+                    }}
+                  >
+                    {s}
+                  </span>
+                ))}
+              </div>
+
+              {/* CTA links */}
+              <div className="flex items-center gap-6">
+                {p.href && (
+                  <a
+                    href={p.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-xs uppercase tracking-[0.3em] transition-colors hover:opacity-80"
+                    style={{ color: "var(--petal)" }}
+                  >
+                    Live ↗
+                  </a>
+                )}
+                {p.github && (
+                  <a
+                    href={p.github}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center gap-1.5 text-xs uppercase tracking-[0.3em] transition-colors hover:opacity-80"
+                    style={{ color: "rgba(255,255,255,0.4)" }}
+                  >
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                    </svg>
+                    GitHub
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  // ── Desktop: GSAP horizontal scroll ──────────────────────────────────────
   return (
     <div ref={wrapRef} className="relative h-screen overflow-hidden">
       {/* Horizontal strip */}
@@ -317,12 +425,10 @@ export function HorizontalProjects() {
                 clipPath: "inset(0 100% 0 0)",
               }}
             >
-              {/* Subtle outer glow */}
               <div
                 className="absolute -inset-4 rounded-3xl blur-2xl opacity-30 pointer-events-none"
                 style={{ background: `radial-gradient(ellipse at center, ${p.glow.replace("0.05", "0.4").replace("0.06", "0.4")} 0%, transparent 70%)` }}
               />
-              {/* Frame */}
               <div
                 className="relative rounded-2xl overflow-hidden"
                 style={{
@@ -330,7 +436,6 @@ export function HorizontalProjects() {
                   boxShadow: "0 24px 64px -12px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.04)",
                 }}
               >
-                {/* Mac-style top bar */}
                 <div
                   className="flex items-center gap-1.5 px-3 h-7"
                   style={{ background: "rgba(20,20,30,0.95)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}
@@ -345,7 +450,6 @@ export function HorizontalProjects() {
                     {p.href?.replace("https://", "").split("/")[0] ?? "localhost"}
                   </span>
                 </div>
-                {/* Screenshot */}
                 <div style={{ aspectRatio: "16/10", overflow: "hidden" }}>
                   <img
                     src={p.img}
