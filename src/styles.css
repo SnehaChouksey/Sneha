@@ -526,6 +526,16 @@ a:hover .contact-link-line {
   animation: spin-slow 20s linear infinite;
 }
 
+/* ── Role rotator cursor blink ── */
+.role-cursor {
+  animation: blink-cursor 1.1s step-end infinite;
+  line-height: 1;
+}
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
 /* ── Skill marquee ── */
 @keyframes marquee {
   from { transform: translateX(0); }

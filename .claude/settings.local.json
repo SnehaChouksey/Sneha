@@ -12,7 +12,21 @@
       "Bash(cd D:/projects/silent-rise-main/silent-rise-main && npx tsc --noEmit 2>&1 | head -40)",
       "Bash(cd D:/projects/silent-rise-main/silent-rise-main && npx tsc --noEmit 2>&1)",
       "Bash(ls D:/projects/silent-rise-main/silent-rise-main/.claude/skills/ 2>/dev/null && find D:/projects/silent-rise-main/silent-rise-main/.claude -name \"*.md\" 2>/dev/null | head -20)",
-      "Bash(cd D:/projects/silent-rise-main/silent-rise-main && npx tsc --noEmit 2>&1; echo \"EXIT:$?\")"
+      "Bash(cd D:/projects/silent-rise-main/silent-rise-main && npx tsc --noEmit 2>&1; echo \"EXIT:$?\")",
+      "WebSearch",
+      "WebFetch(domain:gsap.com)",
+      "WebFetch(domain:codepen.io)",
+      "WebFetch(domain:gist.github.com)",
+      "WebFetch(domain:scrollyvideo.js.org)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:blog.yoanngueny.com)",
+      "WebFetch(domain:muffinman.io)",
+      "Bash(winget install:*)",
+      "Bash(where ffmpeg:*)",
+      "Read(//c/Users/**)",
+      "Bash(FFMPEG=\"/c/Users/HP/AppData/Local/Microsoft/WinGet/Links/ffmpeg.exe\"\n\"$FFMPEG\" -i \"D:/projects/silent-rise-main/public/chapter3.mp4\" \\\\\n  -vcodec libx264 -crf 20 -g 1 -preset fast -pix_fmt yuv420p \\\\\n  -acodec copy \\\\\n  \"D:/projects/silent-rise-main/public/chapter3_smooth.mp4\" 2>&1)",
+      "Bash(cd \"D:/projects/silent-rise-main\" && npx tsc --noEmit 2>&1 | tail -20)",
+      "WebFetch(domain:raw.githubusercontent.com)"
     ]
   },
   "enabledPlugins": {

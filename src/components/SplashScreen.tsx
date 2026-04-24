@@ -76,20 +76,26 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
         <div className="sunflower w-[100px] h-[100px]" />
       </div>
 
-      {/* Hi there */}
+      {/* Hii there */}
       <h1
         ref={textRef}
-        className="text-6xl sm:text-8xl text-white tracking-[-2px] opacity-0"
-        style={{ fontFamily: "'Instrument Serif', serif" }}
+        className="text-6xl sm:text-8xl tracking-[-2px] opacity-0"
+        style={{
+          fontFamily: "'Instrument Serif', serif",
+          background: "linear-gradient(135deg, #ffd97a 0%, #f5c542 40%, #e89b1a 100%)",
+          WebkitBackgroundClip: "text",
+          backgroundClip: "text",
+          color: "transparent",
+        }}
       >
-        Hi there<span className="text-sun">.</span>
+        Hii there
       </h1>
 
       <p
         ref={subRef}
         className="text-white/50 text-sm mt-4 uppercase tracking-[0.3em] opacity-0"
       >
-        welcome to my little world
+        welcome to my little world, am sneha!
       </p>
     </div>
   );

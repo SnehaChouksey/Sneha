@@ -2,7 +2,7 @@ const serif = { fontFamily: "'Instrument Serif', serif" };
 
 export function GitHubStats() {
   return (
-    <div className="reveal mt-8 md:ml-12">
+    <div>
       <div className="card-3d liquid-glass rounded-3xl p-8 relative overflow-hidden">
         {/* Glow */}
         <div

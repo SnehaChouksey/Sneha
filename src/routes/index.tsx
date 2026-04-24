@@ -27,6 +27,65 @@ export const Route = createFileRoute("/")({
   }),
 });
 
+// ─── Role Rotator ──────────────────────────────────────────────────────────────
+
+const ROLES = [
+  "Full Stack Engineer",
+  "Generative AI Engineer",
+  "AI Product Manager",
+  "Automation Engineer",
+];
+
+function RoleRotator() {
+  const [index, setIndex] = useState(0);
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    let swapTimer: ReturnType<typeof setTimeout>;
+    const timer = setInterval(() => {
+      setVisible(false);
+      swapTimer = setTimeout(() => {
+        setIndex((i) => (i + 1) % ROLES.length);
+        setVisible(true);
+      }, 500);
+    }, 3200);
+    return () => {
+      clearInterval(timer);
+      clearTimeout(swapTimer);
+    };
+  }, []);
+
+  return (
+    <div className="hero-text mt-4 mb-1 flex items-center justify-center" style={{ minHeight: "3.5rem" }}>
+      <div className="flex items-center gap-1.5">
+        <span
+          className="text-2xl sm:text-3xl md:text-4xl font-normal"
+          style={{
+            fontFamily: "'Instrument Serif', serif",
+            background: "linear-gradient(135deg, #ffd97a 0%, #f5c542 40%, #e89b1a 100%)",
+            WebkitBackgroundClip: "text",
+            backgroundClip: "text",
+            color: "transparent",
+            display: "inline-block",
+            transition: "opacity 0.45s ease, transform 0.45s ease",
+            opacity: visible ? 1 : 0,
+            transform: visible ? "translateY(0px)" : "translateY(-10px)",
+            textShadow: "0 0 40px rgba(245,197,66,0.25)",
+          }}
+        >
+          {ROLES[index]}
+        </span>
+        <span
+          className="role-cursor text-2xl sm:text-3xl md:text-4xl font-thin"
+          style={{ color: "#f5c542", lineHeight: 1 }}
+        >
+          |
+        </span>
+      </div>
+    </div>
+  );
+}
+
 // ─── Sections ─────────────────────────────────────────────────────────────────
 
 function HeroSection() {
@@ -42,9 +101,11 @@ function HeroSection() {
       <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/80 via-black/20 to-black/60 pointer-events-none" />
 
       <div className="relative z-20 h-full flex flex-col items-center justify-start pt-[18vh] text-center px-6">
-        <p className="hero-text text-[10px] sm:text-xs uppercase tracking-[0.4em] text-white/70 mb-5 font-medium">
+        <p className="hero-text text-[10px] sm:text-xs uppercase tracking-[0.4em] text-white/70 mb-3 font-medium">
           Sneha Chouksey
         </p>
+
+        <RoleRotator />
 
         <h1
           className="hero-text text-4xl sm:text-5xl md:text-7xl leading-[1.05] tracking-[-1px] max-w-4xl font-normal text-white"
@@ -53,24 +114,6 @@ function HeroSection() {
           Building what matters.{" "}
           <em className="not-italic text-sun">Shipping what works.</em>
         </h1>
-
-        {/* Identity — AI-first order */}
-        <div className="hero-text mt-7 flex flex-wrap gap-2 justify-center">
-          {[
-            "AI Agent Developer",
-            "Automation Systems",
-            "Full-Stack Engineer",
-            "Product Manager",
-            "GenAI",
-          ].map((role) => (
-            <span
-              key={role}
-              className="text-[9px] px-4 py-1.5 rounded-full border border-white/20 text-white/50 tracking-[0.2em] uppercase backdrop-blur-sm bg-white/5"
-            >
-              {role}
-            </span>
-          ))}
-        </div>
 
         <p
           className="hero-text text-white/70 text-sm sm:text-base max-w-xl mt-7 leading-[1.8] font-light"
@@ -469,190 +512,249 @@ function ProjectsSection() {
   );
 }
 
-// ─── Internship projects nested inside Omysha card ────────────────────────────
-
-const internshipProjects = [
-  {
-    name: "Zoom Recording Automation Agent",
-    type: "Enterprise AI Automation",
-    status: "Shipped",
-    statusColor: "rgba(100,220,130,0.9)",
-    summary:
-      "End-to-end autonomous agent managing the full Zoom recording lifecycle for the organisation — intelligent content classification, YouTube upload pipeline, Google Drive archival with folder structure, Postgres transcript storage, and failsafe deletion logic. Runs autonomously without human intervention.",
-    stack: ["Python", "FastAPI", "Node.js", "Gemini API", "Google Cloud", "AWS", "Postgres"],
-  },
-  {
-    name: "HR Intelligence Agent",
-    type: "Agentic AI System",
-    status: "In Development",
-    statusColor: "rgba(255,200,60,0.9)",
-    summary:
-      "Multi-step agentic system built on LangGraph for HR process automation — candidate screening workflows, interview scheduling orchestration, onboarding task management, and a RAG-powered HR knowledge base. Integrated with internal tools via MCP protocols.",
-    stack: ["LangGraph", "LangChain", "MCP", "FastAPI", "PostgreSQL", "RAG", "Ollama"],
-  },
-];
+// ─── Chapter III — Cinematic scroll-video; all GSAP lives in HomePage ──────────
 
 function ExperienceSection() {
+  // Shared styles
+  const gold: React.CSSProperties = {
+    background: "linear-gradient(135deg,#ffd97a 0%,#f5c542 45%,#e89b1a 100%)",
+    WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent",
+  };
+  const serif = "'Instrument Serif',serif";
+
+  // Glass panel behind text — readable over any video
+  const glass: React.CSSProperties = {
+    background: "rgba(4,4,14,0.55)",
+    backdropFilter: "blur(18px)",
+    WebkitBackdropFilter: "blur(18px)",
+    border: "1px solid rgba(255,255,255,0.08)",
+    borderRadius: "24px",
+    boxShadow: "0 8px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.07)",
+  };
+
+  // Accent line (gold gradient)
+  const accentLine: React.CSSProperties = {
+    height: "2px",
+    background: "linear-gradient(to right, #ffd97a, #e89b1a, transparent)",
+    borderRadius: "1px",
+    marginBottom: "24px",
+    width: "56px",
+  };
+
   return (
-    <section
-      id="experience"
-      style={{ background: "transparent" }}
-    >
-      <div className="relative z-10 max-w-5xl mx-auto px-6 sm:px-10 py-36">
-        <p className="reveal text-[10px] uppercase tracking-[0.4em] text-[var(--petal)]/70 mb-8">
-          Chapter III — rooms I've been in
-        </p>
-        <h2 className="reveal text-5xl sm:text-7xl text-white leading-[0.95] max-w-3xl" style={serif}>
-          Quiet hours,{" "}
-          <em className="not-italic text-sun">loud shipments.</em>
-        </h2>
+    <section id="experience" style={{ position: "relative", height: "100vh" }}>
 
-        <div className="mt-16 relative">
-          <div className="absolute left-4 top-2 bottom-2 w-px bg-gradient-to-b from-[var(--sunflower)] via-white/20 to-transparent hidden md:block" />
+      {/* ── Full-screen video (paused; GSAP scrubs currentTime) ── */}
+      <video id="ch3-video" muted playsInline preload="auto"
+        className="absolute inset-0 w-full h-full object-cover">
+        <source src="/chapter3.mp4" type="video/mp4" />
+      </video>
 
-          {/* ── Omysha Foundation card with nested projects ── */}
-          <article className="omysha-card exp-card card-3d liquid-glass rounded-3xl p-8 mb-8 md:ml-12 relative overflow-hidden">
-            <div
-              className="absolute -left-[3.6rem] top-10 w-4 h-4 rounded-full hidden md:block pulse-glow"
-              style={{ background: "var(--sunflower)" }}
-            />
-            <div className="absolute -top-16 -right-16 w-56 h-56 rounded-full opacity-10 blur-3xl"
-              style={{ background: "var(--gradient-sun)" }}
-            />
+      {/* ── Cinematic dark vignette ── */}
+      <div className="absolute inset-0 pointer-events-none" style={{
+        background: "linear-gradient(to right,rgba(0,0,0,0.5) 0%,transparent 40%,transparent 60%,rgba(0,0,0,0.4) 100%)",
+      }} />
+      <div className="absolute inset-0 pointer-events-none" style={{
+        background: "linear-gradient(to bottom,rgba(0,0,0,0.5) 0%,transparent 22%,transparent 68%,rgba(0,0,0,0.65) 100%)",
+      }} />
 
-            {/* Role header */}
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-2 mb-5">
-              <div>
-                <h3 className="text-2xl text-white" style={serif}>
-                  AI Product Manager & Full-Stack Developer
-                </h3>
-                <p className="text-[var(--petal)]/80 text-sm mt-1">
-                  Omysha Foundation · VONG ONG & A4G
-                </p>
-              </div>
-              <p className="text-xs text-white/50">Jan 2026 — Present</p>
-            </div>
-
-            {/* Role bullets */}
-            <ul className="space-y-3 text-sm text-white/75 leading-relaxed mb-8">
-              {[
-                { label: "Product Management", body: "Defined OKRs and KPIs, wrote PRDs, ran user research, owned the roadmap from architecture to deployment." },
-                { label: "Agentic AI & GenAI",  body: "Designed autonomous workflows with LangGraph, LangChain, Ollama, and MCP — multi-step reasoning over RAG pipelines." },
-                { label: "Full-Stack & Cloud",  body: "Built and deployed systems across AWS, Vultr, Vercel, Render, and Neon. Google Cloud APIs, Firebase Auth, OAuth 2.0." },
-              ].map((b) => (
-                <li key={b.label}>
-                  <span className="text-[var(--petal)]" style={serif}>{b.label} · </span>
-                  {b.body}
-                </li>
-              ))}
-            </ul>
-
-            {/* ── Nested internship projects — reveal on scroll ── */}
-            <div
-              className="border-t pt-6"
-              style={{ borderColor: "rgba(255,255,255,0.08)" }}
-            >
-              <p
-                className="internship-heading text-[9px] uppercase tracking-[0.5em] mb-6"
-                style={{ color: "rgba(255,217,122,0.5)" }}
-              >
-                Shipped during this tenure —
-              </p>
-              <div className="space-y-5">
-                {internshipProjects.map((p, i) => (
-                  <div
-                    key={p.name}
-                    className={`internship-proj internship-proj-${i} rounded-2xl p-5 relative overflow-hidden`}
-                    style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)" }}
-                  >
-                    {/* Status + type */}
-                    <div className="flex items-center gap-3 mb-3 flex-wrap">
-                      <span
-                        className="w-2 h-2 rounded-full flex-none"
-                        style={{
-                          background: p.statusColor,
-                          boxShadow: `0 0 6px ${p.statusColor}`,
-                        }}
-                      />
-                      <span
-                        className="text-[9px] uppercase tracking-[0.4em]"
-                        style={{ color: p.statusColor }}
-                      >
-                        {p.status}
-                      </span>
-                      <span className="text-[9px] text-white/30 uppercase tracking-[0.3em]">
-                        · {p.type}
-                      </span>
-                    </div>
-
-                    <h4 className="text-lg text-white mb-2" style={serif}>
-                      {p.name}
-                    </h4>
-                    <p className="text-sm text-white/60 leading-relaxed mb-4 max-w-2xl">
-                      {p.summary}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {p.stack.map((s) => (
-                        <span
-                          key={s}
-                          className="text-[9px] px-3 py-1 rounded-full"
-                          style={{
-                            border: "1px solid rgba(255,255,255,0.1)",
-                            color: "rgba(255,255,255,0.5)",
-                            background: "rgba(255,255,255,0.04)",
-                          }}
-                        >
-                          {s}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </article>
-
-          {/* ── Education ── */}
-          <article className="exp-card reveal card-3d liquid-glass rounded-3xl p-8 mb-8 md:ml-12 relative overflow-hidden">
-            <div
-              className="absolute -left-[3.6rem] top-10 w-4 h-4 rounded-full hidden md:block"
-              style={{ background: "rgba(255,255,255,0.4)" }}
-            />
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-2 mb-5">
-              <div>
-                <h3 className="text-2xl text-white" style={serif}>
-                  B.Tech, Computer Science & Engineering
-                </h3>
-                <p className="text-[var(--petal)]/80 text-sm mt-1">
-                  Jabalpur Engineering College · CGPA 7.14 / 10
-                </p>
-              </div>
-              <p className="text-xs text-white/50">2023 — 2027</p>
-            </div>
-            <p className="text-sm text-white/65 leading-relaxed">
-              Where the curiosity got formal — and where most of the late-night experiments still happen.
-            </p>
-          </article>
-
-          {/* ── Wins ── */}
-          <div className="reveal card-3d liquid-glass rounded-3xl p-8 md:ml-12 mb-8">
-            <h3 className="text-2xl text-white mb-6" style={serif}>Small wins worth mentioning</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div>
-                <p className="text-[9px] uppercase tracking-[0.3em] text-[var(--petal)]/70">CodeHunt Hackathon</p>
-                <p className="mt-2 text-white">First runner-up among 100 teams.</p>
-              </div>
-              <div>
-                <p className="text-[9px] uppercase tracking-[0.3em] text-[var(--petal)]/70">Smart India Hackathon</p>
-                <p className="mt-2 text-white">Top 5 nationally — shipped a full-stack AI prototype under the buzzer.</p>
-              </div>
-            </div>
-          </div>
-
-          {/* GitHub contribution calendar */}
-          <GitHubStats />
+      {/* ════════ SCENE 1 — Chapter intro · center ════════ */}
+      <div id="ch3-s1" className="absolute inset-0 flex items-center justify-center pointer-events-none"
+        style={{ opacity: 0, visibility: "hidden" }}>
+        <div style={{ ...glass, padding: "52px 64px", maxWidth: "600px", textAlign: "center" }}>
+          <p style={{ fontFamily: serif, fontSize: "11px", letterSpacing: "0.55em",
+            textTransform: "uppercase", color: "rgba(255,217,122,0.7)", marginBottom: "20px" }}>
+            Chapter III
+          </p>
+          <div style={accentLine} />
+          <h2 style={{ fontFamily: serif, fontSize: "clamp(52px,7vw,88px)", lineHeight: 0.9,
+            color: "#fff", textShadow: "0 4px 40px rgba(0,0,0,0.8)", marginBottom: "24px" }}>
+            Places I Have<br />
+            <span style={gold}>Been To</span>
+          </h2>
+          <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "17px", lineHeight: 1.8,
+            textShadow: "0 2px 12px rgba(0,0,0,0.6)" }}>
+            Walking through the places that shaped<br />who I am — and who I'm becoming.
+          </p>
         </div>
       </div>
+
+      {/* ════════ SCENE 2 — College · right panel ════════ */}
+      <div id="ch3-s2" className="absolute inset-0 flex items-center justify-end pointer-events-none"
+        style={{ padding: "0 6vw", opacity: 0, visibility: "hidden" }}>
+        <div style={{ ...glass, padding: "44px 52px", maxWidth: "420px" }}>
+          <p style={{ fontFamily: serif, fontSize: "10px", letterSpacing: "0.5em",
+            textTransform: "uppercase", color: "rgba(255,217,122,0.65)", marginBottom: "16px" }}>
+            B.Tech CSE &nbsp;·&nbsp; 2023–2027
+          </p>
+          <div style={{ ...accentLine, width: "40px" }} />
+          <h2 style={{ fontFamily: serif, fontSize: "clamp(36px,4.5vw,58px)", lineHeight: 1.0,
+            color: "#fff", textShadow: "0 4px 32px rgba(0,0,0,0.8)", marginBottom: "20px" }}>
+            Jabalpur<br />Engineering<br />College
+          </h2>
+          <p style={{ color: "rgba(255,255,255,0.72)", fontSize: "15px", lineHeight: 1.85,
+            textShadow: "0 2px 10px rgba(0,0,0,0.6)" }}>
+            Where curiosity became foundation.<br />
+            Where engineering shaped<br />the way I think.
+          </p>
+        </div>
+      </div>
+
+      {/* ════════ SCENE 3 — Omysha · left panel ════════ */}
+      <div id="ch3-s3" className="absolute inset-0 flex items-center pointer-events-none"
+        style={{ padding: "0 6vw", opacity: 0, visibility: "hidden" }}>
+        <div style={{ ...glass, padding: "44px 52px", maxWidth: "500px" }}>
+          <p style={{ fontFamily: serif, fontSize: "10px", letterSpacing: "0.5em",
+            textTransform: "uppercase", color: "rgba(255,217,122,0.65)", marginBottom: "16px" }}>
+            Jan 2026 – Present
+          </p>
+          <div style={accentLine} />
+          <h2 style={{ fontFamily: serif, fontSize: "clamp(44px,5.5vw,72px)", lineHeight: 0.9,
+            color: "#fff", textShadow: "0 4px 40px rgba(0,0,0,0.8)", marginBottom: "16px" }}>
+            Omysha<br />Foundation
+          </h2>
+          <p style={{ fontFamily: serif, fontSize: "19px", lineHeight: 1.4,
+            marginBottom: "20px", ...gold }}>
+            AI Product Manager &nbsp;·&nbsp; Full-Stack Dev
+          </p>
+          <div style={{ width: "100%", height: "1px", background: "rgba(255,255,255,0.08)", marginBottom: "20px" }} />
+          <p style={{ color: "rgba(255,255,255,0.72)", fontSize: "15px", lineHeight: 1.85 }}>
+            Where ideas became real systems.<br />
+            Where I learned to own outcomes<br />from architecture to shipping.
+          </p>
+        </div>
+      </div>
+
+      {/* ════════ SCENE P1 — Zoom Agent · bottom bar ════════ */}
+      <div id="ch3-p1" className="absolute bottom-0 left-0 right-0 pointer-events-none"
+        style={{ padding: "0 6vw 6vh", opacity: 0, visibility: "hidden" }}>
+        <div style={{ ...glass, padding: "28px 40px", display: "flex", alignItems: "center", gap: "32px" }}>
+          <div style={{ width: "4px", height: "56px", background: "linear-gradient(to bottom,#ffd97a,#e89b1a)", borderRadius: "2px", flexShrink: 0 }} />
+          <div>
+            <p style={{ fontFamily: serif, fontSize: "10px", letterSpacing: "0.5em",
+              textTransform: "uppercase", color: "rgba(255,217,122,0.65)", marginBottom: "8px" }}>
+              Project · Shipped
+            </p>
+            <h3 style={{ fontFamily: serif, fontSize: "clamp(26px,3vw,42px)", color: "#fff",
+              lineHeight: 1.1, textShadow: "0 4px 24px rgba(0,0,0,0.8)", marginBottom: "6px" }}>
+              Zoom Automation Agent
+            </h3>
+            <p style={{ color: "rgba(255,255,255,0.68)", fontSize: "14px", lineHeight: 1.7 }}>
+              Autonomous Zoom lifecycle system — eliminated manual video operations entirely.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* ════════ SCENE P2 — AI Contest · bottom bar ════════ */}
+      <div id="ch3-p2" className="absolute bottom-0 left-0 right-0 pointer-events-none"
+        style={{ padding: "0 6vw 6vh", opacity: 0, visibility: "hidden" }}>
+        <div style={{ ...glass, padding: "28px 40px", display: "flex", alignItems: "center", gap: "32px" }}>
+          <div style={{ width: "4px", height: "56px", background: "linear-gradient(to bottom,#ffd97a,#e89b1a)", borderRadius: "2px", flexShrink: 0 }} />
+          <div>
+            <p style={{ fontFamily: serif, fontSize: "10px", letterSpacing: "0.5em",
+              textTransform: "uppercase", color: "rgba(255,217,122,0.65)", marginBottom: "8px" }}>
+              Project · Scaled
+            </p>
+            <h3 style={{ fontFamily: serif, fontSize: "clamp(26px,3vw,42px)", color: "#fff",
+              lineHeight: 1.1, textShadow: "0 4px 24px rgba(0,0,0,0.8)", marginBottom: "6px" }}>
+              AI Contest Platform
+            </h3>
+            <p style={{ color: "rgba(255,255,255,0.68)", fontSize: "14px", lineHeight: 1.7 }}>
+              Engineered for 1000+ concurrent submissions — real-time judging at scale.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* ════════ SCENE P3 — Agentic AI · bottom bar ════════ */}
+      <div id="ch3-p3" className="absolute bottom-0 left-0 right-0 pointer-events-none"
+        style={{ padding: "0 6vw 6vh", opacity: 0, visibility: "hidden" }}>
+        <div style={{ ...glass, padding: "28px 40px", display: "flex", alignItems: "center", gap: "32px" }}>
+          <div style={{ width: "4px", height: "56px", background: "linear-gradient(to bottom,#ffd97a,#e89b1a)", borderRadius: "2px", flexShrink: 0 }} />
+          <div>
+            <p style={{ fontFamily: serif, fontSize: "10px", letterSpacing: "0.5em",
+              textTransform: "uppercase", color: "rgba(255,217,122,0.65)", marginBottom: "8px" }}>
+              Project · Agentic
+            </p>
+            <h3 style={{ fontFamily: serif, fontSize: "clamp(26px,3vw,42px)", color: "#fff",
+              lineHeight: 1.1, textShadow: "0 4px 24px rgba(0,0,0,0.8)", marginBottom: "6px" }}>
+              Agentic AI Systems
+            </h3>
+            <p style={{ color: "rgba(255,255,255,0.68)", fontSize: "14px", lineHeight: 1.7 }}>
+              Multi-agent workflows using LangGraph, RAG pipelines, and MCP integrations.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* ════════ SCENE 4 — Achievements · center ════════ */}
+      <div id="ch3-s4" className="absolute inset-0 flex items-center justify-center pointer-events-none"
+        style={{ opacity: 0, visibility: "hidden" }}>
+        <div style={{ ...glass, padding: "52px 64px", maxWidth: "680px", textAlign: "center" }}>
+          <p style={{ fontFamily: serif, fontSize: "10px", letterSpacing: "0.55em",
+            textTransform: "uppercase", color: "rgba(255,217,122,0.7)", marginBottom: "16px" }}>
+            Recognition
+          </p>
+          <div style={{ ...accentLine, margin: "0 auto 24px" }} />
+          <h2 style={{ fontFamily: serif, fontSize: "clamp(44px,5vw,68px)", color: "#fff",
+            lineHeight: 0.95, textShadow: "0 4px 40px rgba(0,0,0,0.7)", marginBottom: "12px" }}>
+            Milestones
+          </h2>
+          <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "14px", marginBottom: "36px",
+            letterSpacing: "0.1em" }}>
+            Recognition earned through building.
+          </p>
+          <div style={{ display: "flex", gap: "0", borderRadius: "16px", overflow: "hidden",
+            border: "1px solid rgba(255,255,255,0.08)" }}>
+            <div style={{ flex: 1, padding: "28px 32px",
+              background: "rgba(255,217,122,0.06)", borderRight: "1px solid rgba(255,255,255,0.08)" }}>
+              <p style={{ fontFamily: serif, fontSize: "9px", letterSpacing: "0.4em",
+                textTransform: "uppercase", color: "rgba(255,217,122,0.6)", marginBottom: "10px" }}>
+                CodeHunt Hackathon
+              </p>
+              <p style={{ fontFamily: serif, fontSize: "26px", color: "#fff", marginBottom: "4px" }}>
+                1st Runner-Up
+              </p>
+              <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "12px" }}>Among 100 teams</p>
+            </div>
+            <div style={{ flex: 1, padding: "28px 32px", background: "rgba(255,217,122,0.04)" }}>
+              <p style={{ fontFamily: serif, fontSize: "9px", letterSpacing: "0.4em",
+                textTransform: "uppercase", color: "rgba(255,217,122,0.6)", marginBottom: "10px" }}>
+                Smart India Hackathon
+              </p>
+              <p style={{ fontFamily: serif, fontSize: "26px", color: "#fff", marginBottom: "4px" }}>
+                Top 5 <span style={{ fontSize: "16px", color: "rgba(255,255,255,0.55)" }}>(internally)</span>
+              </p>
+              <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "12px" }}>Full-stack AI under pressure</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ════════ SCENE 5 — Final · full-center ════════ */}
+      <div id="ch3-s5" className="absolute inset-0 flex items-center justify-center pointer-events-none"
+        style={{ opacity: 0, visibility: "hidden" }}>
+        <div style={{ textAlign: "center" }}>
+          <p style={{ fontFamily: serif, fontSize: "clamp(48px,7vw,96px)", lineHeight: 1.05,
+            color: "#fff",
+            textShadow: "0 0 60px rgba(255,255,255,0.15)" }}>
+            Still building.<br />Still becoming.
+          </p>
+          <div style={{ width: "1px", height: "48px", background: "linear-gradient(to bottom,rgba(255,217,122,0.4),transparent)",
+            margin: "28px auto 0" }} />
+        </div>
+      </div>
+
+      {/* ── Scroll hint ── */}
+      <div id="ch3-hint" className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none"
+        style={{ opacity: 0.5 }}>
+        <p style={{ fontSize: "9px", letterSpacing: "0.45em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)" }}>
+          scroll
+        </p>
+        <div style={{ width: "1px", height: "32px", background: "rgba(255,255,255,0.25)" }} />
+      </div>
+
     </section>
   );
 }
@@ -664,54 +766,73 @@ function ResumeSection() {
       className="relative"
       style={{ background: "transparent" }}
     >
-      <div className="relative z-10 max-w-5xl mx-auto px-6 sm:px-10 py-24">
-        <div className="reveal flex flex-col sm:flex-row sm:items-center sm:justify-between gap-8 p-8 rounded-3xl relative overflow-hidden"
-          style={{ border: "1px solid rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.025)" }}
-        >
-          {/* Glow */}
-          <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full blur-3xl opacity-10 pointer-events-none"
-            style={{ background: "var(--gradient-sun)" }} />
+      <div className="relative z-10 max-w-5xl mx-auto px-6 sm:px-10 py-20">
 
-          <div>
-            <p className="text-[9px] uppercase tracking-[0.5em] text-[var(--petal)]/60 mb-3">
-              Full résumé
-            </p>
-            <h3 className="text-3xl text-white" style={{ fontFamily: "'Instrument Serif', serif" }}>
-              See the full picture.
-            </h3>
-            <p className="text-white/45 text-sm mt-2 max-w-sm leading-relaxed">
-              Projects, stack, experience — all in one document.
-            </p>
+        {/* ── Side-by-side: Resume card + GitHub calendar ── */}
+        <div className="reveal grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-5 items-stretch">
+
+          {/* Left — Resume card */}
+          <div
+            className="card-3d flex flex-col justify-between p-8 rounded-3xl relative overflow-hidden"
+            style={{ border: "1px solid rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.025)" }}
+          >
+            {/* Glow */}
+            <div
+              className="absolute -top-12 -right-12 w-44 h-44 rounded-full blur-3xl opacity-10 pointer-events-none"
+              style={{ background: "var(--gradient-sun)" }}
+            />
+            {/* Accent line */}
+            <div
+              className="absolute top-0 left-8 right-8 h-px"
+              style={{ background: "linear-gradient(to right, transparent, rgba(245,197,66,0.2), transparent)" }}
+            />
+
+            <div className="relative z-10">
+              <p className="text-[9px] uppercase tracking-[0.5em] text-[var(--petal)]/60 mb-4">
+                Full résumé
+              </p>
+              <h3 className="text-3xl text-white leading-tight mb-3" style={{ fontFamily: "'Instrument Serif', serif" }}>
+                See the full<br />picture.
+              </h3>
+              <p className="text-white/40 text-sm leading-relaxed">
+                Projects, stack, experience — all in one document.
+              </p>
+            </div>
+
+            <a
+              href="https://drive.google.com/file/d/1y2Pm0xKcTJupfNkYyfYARbgE_7bVRdlN/view?usp=sharing"
+              target="_blank"
+              rel="noreferrer"
+              className="relative z-10 mt-8 flex items-center gap-3 px-6 py-3 rounded-full transition-all duration-300 text-sm self-start"
+              style={{
+                border: "1px solid rgba(255,217,122,0.35)",
+                color: "var(--petal)",
+                background: "rgba(255,217,122,0.05)",
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLElement).style.background = "rgba(255,217,122,0.12)";
+                (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,217,122,0.6)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLElement).style.background = "rgba(255,217,122,0.05)";
+                (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,217,122,0.35)";
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="12" y1="11" x2="12" y2="17"/>
+                <polyline points="9 14 12 17 15 14"/>
+              </svg>
+              View Résumé ↗
+            </a>
           </div>
 
-          <a
-            href="https://drive.google.com/file/d/1y2Pm0xKcTJupfNkYyfYARbgE_7bVRdlN/view?usp=sharing"
-            target="_blank"
-            rel="noreferrer"
-            className="group flex-none flex items-center gap-3 px-7 py-3.5 rounded-full transition-all duration-300 text-sm"
-            style={{
-              border: "1px solid rgba(255,217,122,0.35)",
-              color: "var(--petal)",
-              background: "rgba(255,217,122,0.05)",
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.background = "rgba(255,217,122,0.12)";
-              (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,217,122,0.6)";
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.background = "rgba(255,217,122,0.05)";
-              (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,217,122,0.35)";
-            }}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-              <polyline points="14 2 14 8 20 8"/>
-              <line x1="12" y1="11" x2="12" y2="17"/>
-              <polyline points="9 14 12 17 15 14"/>
-            </svg>
-            View Résumé ↗
-          </a>
+          {/* Right — GitHub activity */}
+          <GitHubStats />
+
         </div>
+
       </div>
     </section>
   );
@@ -770,8 +891,8 @@ function ContactSection() {
         className="absolute top-1/3 -right-40 w-[500px] h-[500px] rounded-full opacity-12 blur-3xl pointer-events-none"
         style={{ background: "var(--gradient-sun)" }}
       />
-      <div className="relative z-20 max-w-4xl mx-auto px-6 sm:px-10 py-40 min-h-[90vh] flex flex-col justify-center">
-        <div className="reveal mb-16 flex items-center gap-5">
+      <div className="relative z-20 max-w-4xl mx-auto px-6 sm:px-10 py-20 flex flex-col justify-center">
+        <div className="reveal mb-10 flex items-center gap-5">
           <div className="sunflower" style={{ width: "56px", height: "56px" }} />
           <span className="text-5xl text-white/90" style={serif}>sneha.</span>
         </div>
@@ -812,8 +933,8 @@ function ContactSection() {
             </a>
           ))}
         </div>
-        <div className="mt-24 pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-          <p className="text-[10px] uppercase tracking-[0.4em] text-white/20">Made with curiosity & TypeScript</p>
+        <div className="mt-12 pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+          <p className="text-[10px] uppercase tracking-[0.4em] text-white/20">Built with curiosity & code</p>
           <p className="text-[10px] uppercase tracking-[0.4em] text-white/20">Sneha Chouksey © 2025</p>
         </div>
       </div>
@@ -830,6 +951,11 @@ function HomePage() {
   useEffect(() => {
     if (!splashDone) return;
 
+    // Disable browser scroll restoration — prevents Chrome from jumping to a
+    // mid-section position on refresh, which would confuse ScrollTrigger init
+    window.history.scrollRestoration = "manual";
+    window.scrollTo(0, 0);
+
     // ── Lenis smooth scroll ───────────────────────────────────────────────────
     const lenis = new Lenis({
       duration: 1.4,
@@ -840,6 +966,9 @@ function HomePage() {
     lenis.on("scroll", () => ScrollTrigger.update());
     gsap.ticker.add((time: number) => lenis.raf(time * 1000));
     gsap.ticker.lagSmoothing(0);
+    // When GSAP adds a pin spacer it increases page height; tell Lenis to
+    // recalculate its scroll limit so it doesn't cap before the section ends.
+    ScrollTrigger.addEventListener("refresh", () => lenis.resize());
 
     // ── Progress bar ─────────────────────────────────────────────────────────
     if (progressRef.current) {
@@ -921,54 +1050,119 @@ function HomePage() {
 
     // ── Bento cell image parallax on hover is CSS; no extra GSAP needed ──────
 
-    // ── Experience: Omysha card zoom-in from compressed ───────────────────────
-    const omyshaCard = document.querySelector<HTMLElement>(".omysha-card");
-    if (omyshaCard) {
-      gsap.fromTo(omyshaCard,
-        { scale: 0.88, opacity: 0, borderRadius: "48px", y: 60 },
-        {
-          scale: 1, opacity: 1, borderRadius: "24px", y: 0,
-          duration: 1.4, ease: "expo.out",
-          scrollTrigger: { trigger: omyshaCard, start: "top 82%", toggleActions: "play none none none" },
-        }
-      );
-    }
+    // ── Chapter 3: single ScrollTrigger — pin + video + text in onUpdate ────
+    // Using ONE ScrollTrigger eliminates the two-trigger race condition that
+    // caused all overlays to flash on first scroll. Everything is computed
+    // directly from self.progress — no GSAP timeline, no scrub lag, no
+    // catch-up tween, no immediateRender issues. Pure math → DOM.
+    const ch3Video = document.querySelector<HTMLVideoElement>("#ch3-video");
+    const ch3Sec   = document.querySelector<HTMLElement>("#experience");
+    if (ch3Sec && ch3Video) {
+      ch3Video.pause();
+      ch3Video.currentTime = 0;
+      ch3Video.load();
+      ch3Video.addEventListener("canplaythrough", () => {
+        ch3Video.pause(); ch3Video.currentTime = 0;
+      }, { once: true });
 
-    // ── Other exp-cards ───────────────────────────────────────────────────────
-    gsap.utils.toArray<HTMLElement>(".exp-card:not(.omysha-card)").forEach((el, i) => {
-      gsap.fromTo(el,
-        { opacity: 0, x: -60, skewX: 0.8 },
-        {
-          opacity: 1, x: 0, skewX: 0, duration: 1.1, delay: i * 0.1, ease: "power3.out",
-          scrollTrigger: { trigger: el, start: "top 88%", toggleActions: "play none none none" },
-        }
-      );
-    });
+      // Scene definitions: [id, inP, outP, xFrom, yFrom]
+      const SCENES: [string, number, number, number, number][] = [
+        ["ch3-s1", 0.00, 0.17,  0,   32],
+        ["ch3-s2", 0.18, 0.36,  40,   0],
+        ["ch3-s3", 0.36, 0.57, -40,   0],
+        ["ch3-p1", 0.55, 0.67,  0,   40],
+        ["ch3-p2", 0.65, 0.76,  0,   40],
+        ["ch3-p3", 0.74, 0.85,  0,   40],
+        ["ch3-s4", 0.83, 0.94,  0,   32],
+        ["ch3-s5", 0.93, 1.00,  0,   24],
+      ];
 
-    // ── Internship project items: stagger rise ───────────────────────────────
-    gsap.utils.toArray<HTMLElement>(".internship-proj").forEach((el, i) => {
-      gsap.fromTo(el,
-        { opacity: 0, y: 40, scale: 0.97 },
-        {
-          opacity: 1, y: 0, scale: 1,
-          duration: 1, delay: i * 0.18, ease: "power3.out",
-          scrollTrigger: { trigger: el, start: "top 92%", toggleActions: "play none none none" },
-        }
-      );
-    });
+      // Build quickSetters and hard-set everything invisible up front
+      type QS = (v: number) => void;
+      const qs: { alpha: QS; x: QS; y: QS; scale: QS;
+                  inP: number; outP: number; xF: number; yF: number;
+                  mid: number; fadeOut: number; }[] = [];
 
-    // ── Internship heading slide ──────────────────────────────────────────────
-    gsap.fromTo(".internship-heading",
-      { opacity: 0, x: -20 },
-      {
-        opacity: 1, x: 0, duration: 0.8, ease: "power3.out",
-        scrollTrigger: {
-          trigger: ".internship-heading",
-          start: "top 92%",
-          toggleActions: "play none none none",
+      SCENES.forEach(([id, inP, outP, xF, yF]) => {
+        const el = document.getElementById(id) as HTMLElement | null;
+        if (!el) return;
+        // Set transform FROM position; opacity/visibility are already locked to 0/hidden
+        // via the JSX style prop — no GSAP autoAlpha involved
+        gsap.set(el, { x: xF, y: yF, scale: 0.97 });
+        const span = outP - inP;
+        qs.push({
+          // Direct style writes bypass any GSAP autoAlpha caching quirks on first render
+          alpha: (v: number) => {
+            el.style.opacity = v <= 0 ? "0" : v >= 1 ? "1" : v.toFixed(4);
+            el.style.visibility = v > 0.001 ? "visible" : "hidden";
+          },
+          x:     gsap.quickSetter(el, "x", "px") as QS,
+          y:     gsap.quickSetter(el, "y", "px") as QS,
+          scale: gsap.quickSetter(el, "scale")    as QS,
+          inP, outP, xF, yF,
+          mid:     inP + span * 0.32,
+          fadeOut: inP + span * 0.70,
+        });
+      });
+
+      // Hint element — starts at 0.5 opacity, fades out in first 5%
+      const hintEl = document.getElementById("ch3-hint") as HTMLElement | null;
+      const setHintAlpha = hintEl ? (v: number) => {
+        hintEl.style.opacity = v <= 0 ? "0" : v >= 1 ? "1" : v.toFixed(4);
+        hintEl.style.visibility = v > 0.001 ? "visible" : "hidden";
+      } : null;
+      if (hintEl) { hintEl.style.opacity = "0.5"; hintEl.style.visibility = "visible"; }
+
+      // Single ScrollTrigger drives video + hint + all text from onUpdate.
+      // self.progress is the RAW scroll position (no lag), computed fresh
+      // on every Lenis tick. Elements are invisible outside their windows,
+      // guaranteed — no timeline state machine to get confused at init.
+      ScrollTrigger.create({
+        trigger: ch3Sec,
+        start: "top top",
+        end: "+=500%",
+        pin: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          const p = self.progress;
+
+          // ── Video ──────────────────────────────────────────────────────
+          if (ch3Video.duration) ch3Video.currentTime = p * ch3Video.duration;
+
+          // ── Scroll hint (fades out in first 5%) ────────────────────────
+          if (setHintAlpha) setHintAlpha(p < 0.05 ? 0.5 * (1 - p / 0.05) : 0);
+
+          // ── Text scenes ────────────────────────────────────────────────
+          qs.forEach(s => {
+            if (p < s.inP || p > s.outP) {
+              // Outside window — fully hidden
+              s.alpha(0); s.x(s.xF); s.y(s.yF); s.scale(0.97);
+              return;
+            }
+            let a: number, x: number, y: number, sc: number;
+            if (p < s.mid) {
+              // Fade in (power3.out)
+              const t = (p - s.inP) / (s.mid - s.inP);
+              const e = 1 - Math.pow(1 - t, 3);
+              a = e; x = s.xF * (1 - e); y = s.yF * (1 - e); sc = 0.97 + 0.03 * e;
+            } else if (p < s.fadeOut) {
+              // Hold — fully visible
+              a = 1; x = 0; y = 0; sc = 1;
+            } else {
+              // Fade out (power2.in)
+              const t = (p - s.fadeOut) / (s.outP - s.fadeOut);
+              const e = t * t;
+              a = 1 - e; x = 0; y = -20 * e; sc = 1 - 0.02 * e;
+            }
+            s.alpha(a); s.x(x); s.y(y); s.scale(sc);
+          });
         },
-      }
-    );
+      });
+
+      // Triggers lenis.resize() via the registered "refresh" listener
+      ScrollTrigger.refresh();
+    }
 
     // ── Contact logo sunflower spin-in ───────────────────────────────────────
     gsap.fromTo("#contact .sunflower",
