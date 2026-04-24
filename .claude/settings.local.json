@@ -26,7 +26,8 @@
       "Read(//c/Users/**)",
       "Bash(FFMPEG=\"/c/Users/HP/AppData/Local/Microsoft/WinGet/Links/ffmpeg.exe\"\n\"$FFMPEG\" -i \"D:/projects/silent-rise-main/public/chapter3.mp4\" \\\\\n  -vcodec libx264 -crf 20 -g 1 -preset fast -pix_fmt yuv420p \\\\\n  -acodec copy \\\\\n  \"D:/projects/silent-rise-main/public/chapter3_smooth.mp4\" 2>&1)",
       "Bash(cd \"D:/projects/silent-rise-main\" && npx tsc --noEmit 2>&1 | tail -20)",
-      "WebFetch(domain:raw.githubusercontent.com)"
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(cd \"D:\\\\projects\\\\silent-rise-main\" && npm run build 2>&1 | tail -30)"
     ]
   },
   "enabledPlugins": {
