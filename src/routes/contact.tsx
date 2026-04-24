@@ -3,14 +3,6 @@ import { SiteNav } from "@/components/SiteNav";
 
 export const Route = createFileRoute("/contact")({
   component: ContactPage,
-  head: () => ({
-    meta: [
-      { title: "Contact — Sneha Chouksey" },
-      { name: "description", content: "Let's build something quiet and useful together. Reach out by email, LinkedIn, or GitHub." },
-      { property: "og:title", content: "Contact — Sneha Chouksey" },
-      { property: "og:description", content: "Let's build something quiet and useful together." },
-    ],
-  }),
 });
 
 const serif = { fontFamily: "'Instrument Serif', serif" };

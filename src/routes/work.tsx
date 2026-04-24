@@ -3,14 +3,6 @@ import { SiteNav } from "@/components/SiteNav";
 
 export const Route = createFileRoute("/work")({
   component: WorkPage,
-  head: () => ({
-    meta: [
-      { title: "Work — Sneha Chouksey" },
-      { name: "description", content: "What I do, how I think, and the kinds of problems I love to solve. Agentic AI, full-stack engineering, and product." },
-      { property: "og:title", content: "Work — Sneha Chouksey" },
-      { property: "og:description", content: "Agentic AI, full-stack engineering, and product thinking." },
-    ],
-  }),
 });
 
 const serif = { fontFamily: "'Instrument Serif', serif" };
