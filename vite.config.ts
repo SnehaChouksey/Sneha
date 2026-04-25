@@ -11,4 +11,21 @@ export default defineConfig({
     tailwindcss(),
     tsconfigPaths(),
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("three") || id.includes("@react-three")) {
+            return "three";
+          }
+          if (id.includes("gsap") || id.includes("lenis")) {
+            return "gsap";
+          }
+          if (id.includes("node_modules")) {
+            return "vendor";
+          }
+        },
+      },
+    },
+  },
 });

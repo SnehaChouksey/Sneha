@@ -185,6 +185,7 @@ export function HorizontalProjects() {
                 <img
                   src={p.img}
                   alt={p.name}
+                  loading="lazy"
                   className="w-full h-full object-cover object-top"
                   onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                 />
@@ -454,8 +455,8 @@ export function HorizontalProjects() {
                   <img
                     src={p.img}
                     alt={p.name}
+                    loading="lazy"
                     className="w-full h-full object-cover object-top pointer-events-none"
-                    style={{ willChange: "transform" }}
                     onError={(e) => {
                       (e.target as HTMLImageElement).src =
                         "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop";

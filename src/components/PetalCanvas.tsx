@@ -84,7 +84,7 @@ function PetalField({ count = 30 }: { count?: number }) {
   );
 }
 
-export function PetalCanvas({ className = "" }: { className?: string }) {
+export function PetalCanvas({ className = "", count = 20 }: { className?: string; count?: number }) {
   const [hasWebGL, setHasWebGL] = useState(true);
 
   useEffect(() => {
@@ -99,11 +99,11 @@ export function PetalCanvas({ className = "" }: { className?: string }) {
     <div className={`pointer-events-none overflow-hidden ${className}`}>
       <Canvas
         camera={{ position: [0, 0, 10], fov: 50 }}
-        gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
+        gl={{ alpha: true, antialias: false, powerPreference: "high-performance" }}
         style={{ width: "100%", height: "100%", background: "transparent" }}
-        dpr={[1, 2]} // Limit DPR for performance
+        dpr={[1, 1.5]}
       >
-        <PetalField count={30} />
+        <PetalField count={count} />
       </Canvas>
     </div>
   );

@@ -1,13 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import { SiteNav } from "@/components/SiteNav";
-import { PetalCanvas } from "@/components/PetalCanvas";
 import { SplashScreen } from "@/components/SplashScreen";
 import { HorizontalProjects } from "@/components/HorizontalProjects";
 import { GitHubStats } from "@/components/GitHubStats";
+
+// Lazy-load Three.js/PetalCanvas so it doesn't block the critical render path
+const PetalCanvas = lazy(() =>
+  import("@/components/PetalCanvas").then((m) => ({ default: m.PetalCanvas }))
+);
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -28,10 +32,16 @@ const ROLES = [
 
 function RoleRotator() {
   const [index, setIndex] = useState(0);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setIndex((i) => (i + 1) % ROLES.length);
+      // Brief fade out → swap → fade in avoids the CSS keyframe restart glitch
+      setVisible(false);
+      setTimeout(() => {
+        setIndex((i) => (i + 1) % ROLES.length);
+        setVisible(true);
+      }, 180);
     }, 3200);
     return () => clearInterval(timer);
   }, []);
@@ -40,9 +50,13 @@ function RoleRotator() {
     <div className="hero-text mt-4 mb-1 flex items-center justify-center" style={{ minHeight: "3.5rem" }}>
       <div className="flex items-center gap-1.5">
         <span
-          key={index}
           className="role-text text-2xl sm:text-3xl md:text-4xl font-normal"
-          style={{ fontFamily: "'Instrument Serif', serif" }}
+          style={{
+            fontFamily: "'Instrument Serif', serif",
+            opacity: visible ? 1 : 0,
+            transform: visible ? "translateY(0) scale(1)" : "translateY(10px) scale(0.97)",
+            transition: "opacity 0.35s cubic-bezier(0.22,1,0.36,1), transform 0.35s cubic-bezier(0.22,1,0.36,1)",
+          }}
         >
           {ROLES[index]}
         </span>
@@ -64,15 +78,14 @@ function HeroSection() {
     <section id="hero" className="relative h-screen w-full overflow-hidden"
       style={{ background: "linear-gradient(160deg, #0a0518 0%, #120a2c 55%, #0c1423 100%)" }}>
       <video
-        autoPlay loop muted playsInline preload="auto"
+        autoPlay loop muted playsInline preload="metadata"
         className="absolute inset-0 w-full h-full object-cover z-0"
       >
         <source src="/hero.mp4" type="video/mp4" />
       </video>
-      <PetalCanvas className="absolute inset-0 w-full h-full z-10 opacity-30" />
       <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/80 via-black/20 to-black/60 pointer-events-none" />
 
-      <div className="relative z-20 h-full flex flex-col items-center justify-start pt-[18vh] text-center px-6">
+      <div className="relative z-20 h-full flex flex-col items-center justify-start pt-[18vh] text-center px-6" style={{ isolation: "isolate" }}>
         <p className="hero-text text-sm sm:text-base md:text-lg uppercase tracking-[0.55em] text-white/90 mb-3 font-medium">
           Sneha Chouksey
         </p>
@@ -139,7 +152,9 @@ function StorySection() {
       className="relative overflow-hidden"
       style={{ background: "transparent" }}
     >
-      <PetalCanvas className="story-petals absolute inset-0 w-full h-full z-10 opacity-60" />
+      <Suspense fallback={null}>
+        <PetalCanvas className="story-petals absolute inset-0 w-full h-full z-10 opacity-60" count={8} />
+      </Suspense>
       <div className="relative z-20 max-w-5xl mx-auto px-6 sm:px-10 py-40">
         <p className="reveal text-[10px] uppercase tracking-[0.4em] text-[var(--petal)]/70 mb-8">
           Prologue — who I am
@@ -408,7 +423,7 @@ function WorkSection() {
                   }}
                 >
                   {item.icon && (
-                    <img src={item.icon} alt={item.name} width={12} height={12} className="flex-none opacity-85"
+                    <img src={item.icon} alt={item.name} width={12} height={12} loading="lazy" className="flex-none opacity-85"
                       onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
                   )}
                   {item.name}
@@ -432,7 +447,7 @@ function WorkSection() {
                   }}
                 >
                   {item.icon && (
-                    <img src={item.icon} alt={item.name} width={12} height={12} className="flex-none opacity-85"
+                    <img src={item.icon} alt={item.name} width={12} height={12} loading="lazy" className="flex-none opacity-85"
                       onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
                   )}
                   {item.name}
@@ -456,7 +471,7 @@ function WorkSection() {
                   }}
                 >
                   {item.icon && (
-                    <img src={item.icon} alt={item.name} width={12} height={12} className="flex-none opacity-80"
+                    <img src={item.icon} alt={item.name} width={12} height={12} loading="lazy" className="flex-none opacity-80"
                       onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
                   )}
                   {item.name}
@@ -526,7 +541,7 @@ function ExperienceSection() {
     <section id="experience" style={{ position: "relative", height: "100vh" }}>
 
       {/* ── Full-screen video (paused; GSAP scrubs currentTime) ── */}
-      <video id="ch3-video" muted playsInline preload="auto"
+      <video id="ch3-video" muted playsInline preload="none"
         className="absolute inset-0 w-full h-full object-cover">
         <source src="/chapter3.mp4" type="video/mp4" />
       </video>
@@ -813,7 +828,9 @@ function ContactSection() {
       className="relative overflow-hidden"
       style={{ background: "transparent" }}
     >
-      <PetalCanvas className="absolute inset-0 w-full h-full z-10 opacity-25" />
+      <Suspense fallback={null}>
+        <PetalCanvas className="absolute inset-0 w-full h-full z-10 opacity-25" count={6} />
+      </Suspense>
       <div
         className="absolute top-1/3 -right-40 w-[500px] h-[500px] rounded-full opacity-12 blur-3xl pointer-events-none"
         style={{ background: "var(--gradient-sun)" }}
@@ -951,7 +968,7 @@ function HomePage() {
     gsap.fromTo(".sun-core",
       { scale: 1, opacity: 0.9 },
       {
-        scale: 80, opacity: 0, ease: "none",
+        scale: 30, opacity: 0, ease: "none",
         scrollTrigger: { trigger: "#story", start: "top 100%", end: "top 0%", scrub: true },
       }
     );
@@ -1009,19 +1026,26 @@ function HomePage() {
     // ── Bento cell image parallax on hover is CSS; no extra GSAP needed ──────
 
     // ── Chapter 3: single ScrollTrigger — pin + video + text in onUpdate ────
-    // Using ONE ScrollTrigger eliminates the two-trigger race condition that
-    // caused all overlays to flash on first scroll. Everything is computed
-    // directly from self.progress — no GSAP timeline, no scrub lag, no
-    // catch-up tween, no immediateRender issues. Pure math → DOM.
     const ch3Video = document.querySelector<HTMLVideoElement>("#ch3-video");
     const ch3Sec   = document.querySelector<HTMLElement>("#experience");
+    let videoObserver: IntersectionObserver | null = null;
     if (ch3Sec && ch3Video) {
-      ch3Video.pause();
-      ch3Video.currentTime = 0;
-      ch3Video.load();
-      ch3Video.addEventListener("canplaythrough", () => {
-        ch3Video.pause(); ch3Video.currentTime = 0;
-      }, { once: true });
+      // Lazy-load the video only when the section is ~400px away from viewport
+      // so it doesn't compete with hero.mp4 on initial page load.
+      videoObserver = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) {
+            videoObserver?.disconnect();
+            ch3Video.preload = "auto";
+            ch3Video.load();
+            ch3Video.addEventListener("canplaythrough", () => {
+              ch3Video.pause(); ch3Video.currentTime = 0;
+            }, { once: true });
+          }
+        },
+        { rootMargin: "400px" }
+      );
+      videoObserver.observe(ch3Sec);
 
       // Scene definitions: [id, inP, outP, xFrom, yFrom]
       const SCENES: [string, number, number, number, number][] = [
@@ -1132,6 +1156,7 @@ function HomePage() {
     );
 
     return () => {
+      videoObserver?.disconnect();
       lenis.destroy();
       ScrollTrigger.getAll().forEach((t) => t.kill());
     };
