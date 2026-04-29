@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import Lenis from "lenis";
 import { SiteNav } from "@/components/SiteNav";
 import { SplashScreen } from "@/components/SplashScreen";
 
@@ -945,9 +944,12 @@ function HomePage() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let ST: any = null;
 
-    // Dynamically import ScrollTrigger AFTER the splash so its chunk doesn't
-    // block the critical render path — directly reduces TBT on mobile.
-    import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
+    // Dynamically import ScrollTrigger + Lenis AFTER the splash so their chunks
+    // don't block the critical render path — directly reduces TBT on mobile.
+    Promise.all([
+      import("gsap/ScrollTrigger"),
+      import("lenis"),
+    ]).then(([{ ScrollTrigger }, { default: Lenis }]) => {
       gsap.registerPlugin(ScrollTrigger);
       ST = ScrollTrigger;
 
@@ -1174,7 +1176,7 @@ function HomePage() {
         scrollTrigger: { trigger: "#contact", start: "top 80%", toggleActions: "play none none none" },
       }
     );
-    }); // end import("gsap/ScrollTrigger").then()
+    }); // end Promise.all([ScrollTrigger, Lenis]).then()
 
     return () => {
       videoObserver?.disconnect();

@@ -22,7 +22,10 @@ export default defineConfig({
           if (id.includes("ScrollTrigger")) {
             return "gsap-st";
           }
-          if (id.includes("gsap") || id.includes("lenis")) {
+          if (id.includes("lenis")) {
+            return "lenis";
+          }
+          if (id.includes("gsap")) {
             return "gsap";
           }
           if (id.includes("react-dom") || id.includes("react/jsx")) {
