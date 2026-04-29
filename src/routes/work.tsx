@@ -20,7 +20,7 @@ function WorkPage() {
     <main className="surface-dusk magic-noise min-h-screen">
       <SiteNav />
       <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 pt-36 pb-24">
-      <p className="animate-fade-rise text-xs uppercase tracking-[0.3em] text-muted-foreground mb-6">Chapter one — the work</p>
+      <p className="animate-fade-rise text-xs uppercase tracking-[0.3em] text-muted-foreground mb-6">Chapter one: the work</p>
       <h1 className="animate-fade-rise text-5xl sm:text-7xl leading-[0.95] tracking-tight text-white max-w-4xl" style={serif}>
         I sit with the problem <em className="not-italic text-sun">until it tells me what it wants to be.</em>
       </h1>
@@ -31,7 +31,7 @@ function WorkPage() {
       <div className="animate-fade-rise-delay-2 mt-16 grid grid-cols-1 md:grid-cols-2 gap-6">
         {[
           { title: "Agentic & Generative AI", body: "Multi-agent orchestration with LangGraph, tool-chaining with LangChain, MCP integrations, on-prem inference with Ollama, and RAG pipelines tuned for production traffic." },
-          { title: "Full-Stack Engineering", body: "Next.js SSR, Node + Express, FastAPI services, PostgreSQL on Neon, Redis-backed BullMQ workers — shipped on AWS, Vercel, Render, and Vultr." },
+          { title: "Full-Stack Engineering", body: "Next.js SSR, Node + Express, FastAPI services, PostgreSQL on Neon, Redis-backed BullMQ workers, shipped on AWS, Vercel, Render, and Vultr." },
           { title: "Product Ownership", body: "Defining OKRs, writing PRDs, scoping roadmaps, and turning fuzzy ideas into things people can actually use. Built two production tools end-to-end at Omysha." },
           { title: "UI & Design Sensibility", body: "I care how it feels. Tailwind + shadcn, Framer Motion micro-interactions, and a soft spot for typography that breathes." },
         ].map((c) => (
@@ -59,7 +59,7 @@ function WorkPage() {
       </div>
 
       <div className="mt-20 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-        <p className="text-white/70 max-w-md">Next chapter — where I've actually done the work.</p>
+        <p className="text-white/70 max-w-md">Next chapter: where I've actually done the work.</p>
         <Link to="/experience" className="liquid-glass rounded-full px-8 py-3 text-sm text-white hover:scale-[1.03] pulse-glow">
           Experience →
         </Link>

@@ -35,7 +35,7 @@ const projects = [
     n: "04",
     name: "Zoom Automation",
     tag: "Autonomous Recording Lifecycle",
-    body: "Intelligent agent managing enterprise recordings — from classification to archival and deletion.",
+    body: "Intelligent agent managing enterprise recordings: from classification to archival and deletion.",
     stack: ["Python", "FastAPI", "Gemini API", "GCP"],
     img: "/project-serene.png",
     href: "",

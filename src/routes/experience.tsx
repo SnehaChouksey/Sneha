@@ -12,7 +12,7 @@ function ExperiencePage() {
     <main className="surface-meadow magic-noise min-h-screen">
       <SiteNav />
       <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 pt-36 pb-24">
-      <p className="animate-fade-rise text-xs uppercase tracking-[0.3em] text-muted-foreground mb-6">Chapter two — the rooms I've been in</p>
+      <p className="animate-fade-rise text-xs uppercase tracking-[0.3em] text-muted-foreground mb-6">Chapter two: the rooms I've been in</p>
       <h1 className="animate-fade-rise text-5xl sm:text-7xl leading-[0.95] tracking-tight text-white max-w-4xl" style={serif}>
         Quiet hours, <em className="not-italic text-sun">loud shipments.</em>
       </h1>
@@ -34,10 +34,10 @@ function ExperiencePage() {
             <p className="text-sm text-white/60">Jan 2026 — Present</p>
           </div>
           <ul className="space-y-4 text-sm text-white/85 leading-relaxed">
-            <li><span className="text-[var(--petal)]" style={serif}>Agentic AI & GenAI · </span> Designed autonomous agentic workflows with LangGraph, LangChain, Ollama, and MCP — multi-step reasoning over RAG pipelines tuned with Claude Skills.</li>
+            <li><span className="text-[var(--petal)]" style={serif}>Agentic AI & GenAI · </span> Designed autonomous agentic workflows with LangGraph, LangChain, Ollama, and MCP. Multi-step reasoning over RAG pipelines tuned with Claude Skills.</li>
             <li><span className="text-[var(--petal)]" style={serif}>Full-Stack & Cloud · </span> Built and deployed systems across AWS, Vultr, Vercel, Render, and Neon. Integrated Google Cloud APIs, Firebase Auth, and OAuth 2.0.</li>
             <li><span className="text-[var(--petal)]" style={serif}>Product Ownership · </span> Defined OKRs and success metrics, iterated on user feedback, led delivery from architecture to deployment across two production tools.</li>
-            <li><span className="text-[var(--petal)]" style={serif}>Zoom Automation Agent · </span> End-to-end AI agent managing the full enterprise recording lifecycle — classification, compression, archival, transcripts, deletion.</li>
+            <li><span className="text-[var(--petal)]" style={serif}>Zoom Automation Agent · </span> End-to-end AI agent managing the full enterprise recording lifecycle: classification, compression, archival, transcripts, deletion.</li>
             <li><span className="text-[var(--petal)]" style={serif}>AI Swaraj contest platform · </span> Scalable essay platform supporting 1000+ concurrent submissions with LLM evaluation, plagiarism detection, and async workers.</li>
           </ul>
         </article>
@@ -52,7 +52,7 @@ function ExperiencePage() {
             <p className="text-sm text-white/60">2023 — 2027</p>
           </div>
           <p className="text-sm text-white/70 leading-relaxed">
-            Where the curiosity got formal — and where most of the late-night experiments still happen.
+            Where the curiosity got formal, and where most of the late-night experiments still happen.
           </p>
         </article>
 
@@ -66,14 +66,14 @@ function ExperiencePage() {
             </div>
             <div>
               <p className="text-xs uppercase tracking-[0.25em] text-[var(--petal)]/80">Smart India Hackathon</p>
-              <p className="mt-2 text-white">Top 5 nationally — shipped a full-stack AI prototype under the buzzer.</p>
+              <p className="mt-2 text-white">Top 5 nationally. Shipped a full-stack AI prototype under the buzzer.</p>
             </div>
           </div>
         </article>
       </div>
 
       <div className="mt-20 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-        <p className="text-white/70 max-w-md">Next chapter — the things I've made.</p>
+        <p className="text-white/70 max-w-md">Next chapter: the things I've made.</p>
         <Link to="/projects" className="liquid-glass rounded-full px-8 py-3 text-sm text-white hover:scale-[1.03] pulse-glow">
           Projects →
         </Link>

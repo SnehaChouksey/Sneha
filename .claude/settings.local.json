@@ -32,7 +32,8 @@
       "Bash(cd D:/projects/silent-rise-main && npm run build 2>&1 | grep -E \"error|warning|built|✓|✗\" | head -20)",
       "Bash(cd \"D:\\\\projects\\\\silent-rise-main\" && npx tsc --noEmit 2>&1 | head -50)",
       "Bash(cd \"D:\\\\projects\\\\silent-rise-main\" && npx vite build 2>&1 | tail -20)",
-      "Bash(cd \"D:\\\\projects\\\\silent-rise-main\" && npx vite build 2>&1 | tail -25)"
+      "Bash(cd \"D:\\\\projects\\\\silent-rise-main\" && npx vite build 2>&1 | tail -25)",
+      "WebFetch(domain:pagespeed.web.dev)"
     ]
   },
   "enabledPlugins": {

@@ -12,14 +12,24 @@ export default defineConfig({
     tsconfigPaths(),
   ],
   build: {
+    target: "esnext",
     rollupOptions: {
       output: {
         manualChunks(id) {
           if (id.includes("three") || id.includes("@react-three")) {
             return "three";
           }
+          if (id.includes("ScrollTrigger")) {
+            return "gsap-st";
+          }
           if (id.includes("gsap") || id.includes("lenis")) {
             return "gsap";
+          }
+          if (id.includes("react-dom") || id.includes("react/jsx")) {
+            return "react";
+          }
+          if (id.includes("@tanstack/react-router") || id.includes("@tanstack/router")) {
+            return "router";
           }
           if (id.includes("node_modules")) {
             return "vendor";

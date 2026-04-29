@@ -1,19 +1,21 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import { SiteNav } from "@/components/SiteNav";
 import { SplashScreen } from "@/components/SplashScreen";
-import { HorizontalProjects } from "@/components/HorizontalProjects";
-import { GitHubStats } from "@/components/GitHubStats";
 
-// Lazy-load Three.js/PetalCanvas so it doesn't block the critical render path
+// Lazy-load everything below the fold so it doesn't block the critical render path
 const PetalCanvas = lazy(() =>
   import("@/components/PetalCanvas").then((m) => ({ default: m.PetalCanvas }))
 );
+const HorizontalProjects = lazy(() =>
+  import("@/components/HorizontalProjects").then((m) => ({ default: m.HorizontalProjects }))
+);
+const GitHubStats = lazy(() =>
+  import("@/components/GitHubStats").then((m) => ({ default: m.GitHubStats }))
+);
 
-gsap.registerPlugin(ScrollTrigger);
 
 const serif = { fontFamily: "'Instrument Serif', serif" };
 
@@ -78,7 +80,7 @@ function HeroSection() {
     <section id="hero" className="relative h-screen w-full overflow-hidden"
       style={{ background: "linear-gradient(160deg, #0a0518 0%, #120a2c 55%, #0c1423 100%)" }}>
       <video
-        autoPlay loop muted playsInline preload="metadata"
+        autoPlay loop muted playsInline preload="none"
         className="absolute inset-0 w-full h-full object-cover z-0"
       >
         <source src="/hero.mp4" type="video/mp4" />
@@ -105,7 +107,7 @@ function HeroSection() {
           style={{ textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}
         >
           I engineer agentic AI systems, build automation pipelines, develop
-          full-stack products — and own them end-to-end as a product manager.
+          full-stack products and own them end-to-end as a product manager.
         </p>
 
         {/* CTA — intentionally NOT hero-text so GSAP parallax doesn't touch it */}
@@ -157,7 +159,7 @@ function StorySection() {
       </Suspense>
       <div className="relative z-20 max-w-5xl mx-auto px-6 sm:px-10 py-40">
         <p className="reveal text-[10px] uppercase tracking-[0.4em] text-[var(--petal)]/70 mb-8">
-          Prologue — who I am
+          Prologue: who I am
         </p>
         <h2 className="reveal text-5xl sm:text-7xl text-white leading-[0.95] max-w-3xl" style={serif}>
           One person.{" "}
@@ -166,14 +168,14 @@ function StorySection() {
         </h2>
         <div className="reveal mt-12 grid grid-cols-1 md:grid-cols-2 gap-10 text-white/70 text-base leading-[1.9]">
           <p>
-            I'm Sneha — an AI engineer who builds agentic systems, a full-stack
+            I'm Sneha, an AI engineer who builds agentic systems, a full-stack
             developer who ships production products, and a product manager who owns
             outcomes end-to-end. I don't hand off to engineering; I{" "}
             <em className="not-italic text-white">am</em> engineering.
           </p>
           <p>
-            My work starts at the architecture level — LangGraph pipelines, FastAPI
-            services, RAG systems — and ends at the product level: PRDs, OKRs,
+            My work starts at the architecture level: LangGraph pipelines, FastAPI
+            services, RAG systems, and ends at the product level: PRDs, OKRs,
             user feedback loops. The full stack of everything.
           </p>
         </div>
@@ -182,7 +184,7 @@ function StorySection() {
             { icon: "◎", label: "AI Agent Dev",       sub: "LangGraph · MCP · RAG" },
             { icon: "⚡", label: "Automation Eng.",   sub: "Workflows · Integrations" },
             { icon: "⌨", label: "Full-Stack Dev",     sub: "Next.js · FastAPI · DB" },
-            { icon: "◈", label: "Product Manager",    sub: "PRDs · OKRs · Roadmaps" },
+            { icon: "◈", label: "AI Product Manager", sub: "AI SaaS · Ship · Scale" },
             { icon: "◐", label: "Design Thinker",    sub: "UI · Motion · Typography" },
           ].map((item) => (
             <div
@@ -208,7 +210,7 @@ const bentoDomains = [
     icon: "◎",
     title: "AI Systems & GenAI",
     subtitle: "Agentic AI · RAG Pipelines · MCP · LangGraph",
-    body: "Multi-agent orchestration, RAG pipelines tuned for production, on-prem inference with Ollama, MCP integrations. Systems that reason, retrieve, and act — without human loops.",
+    body: "Multi-agent orchestration, RAG pipelines tuned for production, on-prem inference with Ollama, MCP integrations. Systems that reason, retrieve, and act without human loops.",
     items: ["LangGraph", "LangChain", "RAG", "Ollama", "MCP", "Claude · GPT-4 · Gemini", "Qdrant"],
     img: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?q=80&w=1200&auto=format&fit=crop",
     imgFallback: "from-[#0a0f1e] to-[#1a1040]",
@@ -216,10 +218,10 @@ const bentoDomains = [
   {
     size: "small" as const,
     icon: "◈",
-    title: "Product Manager",
-    subtitle: "PRDs · OKRs · Roadmaps",
-    body: "End-to-end ownership. Fuzzy idea to shipped feature — I define success, run research, measure outcomes, and lead delivery.",
-    items: ["PRDs", "OKRs / KPIs", "User Research", "Roadmapping", "Agile"],
+    title: "AI Product Manager",
+    subtitle: "AI SaaS · Product Vision · Ship & Scale",
+    body: "I write PRDs and user stories for AI products, then build them. Feature scoping, LLM behaviour design, feedback loops, iteration. The full PM role but for AI SaaS.",
+    items: ["AI SaaS", "LLM Products", "Product Vision", "0→1 Shipping", "User Feedback"],
     img: null,
     imgFallback: "from-[#1a1030] to-[#2a1540]",
   },
@@ -317,7 +319,7 @@ function WorkSection() {
     >
       <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 py-36">
         <p className="reveal text-[10px] uppercase tracking-[0.4em] text-[var(--petal)]/70 mb-8">
-          Chapter I — what I build
+          Chapter I: what I build
         </p>
         <h2 className="reveal text-5xl sm:text-7xl text-white leading-[0.95] max-w-3xl" style={serif}>
           I sit with the problem{" "}
@@ -338,12 +340,13 @@ function WorkSection() {
               >
                 {/* Background image or gradient */}
                 {d.img ? (
-                  <div
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                    style={{
-                      backgroundImage: `url(${d.img})`,
-                      filter: "blur(1.5px) brightness(0.55) saturate(0.8)",
-                    }}
+                  <img
+                    src={d.img}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                    style={{ filter: "blur(1.5px) brightness(0.55) saturate(0.8)" }}
                   />
                 ) : (
                   <div
@@ -493,7 +496,7 @@ function ProjectsSection() {
     >
       <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 pt-36 pb-20">
         <p className="reveal text-[10px] uppercase tracking-[0.4em] text-[var(--petal)]/70 mb-8">
-          Chapter II — personal projects
+          Chapter II: personal projects
         </p>
         <h2 className="reveal text-5xl sm:text-7xl text-white leading-[0.95] max-w-3xl" style={serif}>
           Small worlds,{" "}
@@ -503,7 +506,9 @@ function ProjectsSection() {
           Scroll to explore →
         </p>
       </div>
-      <HorizontalProjects />
+      <Suspense fallback={null}>
+        <HorizontalProjects />
+      </Suspense>
     </div>
   );
 }
@@ -570,7 +575,7 @@ function ExperienceSection() {
           </h2>
           <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "17px", lineHeight: 1.8,
             textShadow: "0 2px 12px rgba(0,0,0,0.6)" }}>
-            Walking through the places that shaped<br />who I am — and who I'm becoming.
+            Walking through the places that shaped<br />who I am and who I'm becoming.
           </p>
         </div>
       </div>
@@ -636,7 +641,7 @@ function ExperienceSection() {
               Zoom Automation Agent
             </h3>
             <p style={{ color: "rgba(255,255,255,0.68)", fontSize: "14px", lineHeight: 1.7 }}>
-              Autonomous Zoom lifecycle system — eliminated manual video operations entirely.
+              Autonomous Zoom lifecycle system. Eliminated manual video operations entirely.
             </p>
           </div>
         </div>
@@ -657,7 +662,7 @@ function ExperienceSection() {
               AI Contest Platform
             </h3>
             <p style={{ color: "rgba(255,255,255,0.68)", fontSize: "14px", lineHeight: 1.7 }}>
-              Engineered for 1000+ concurrent submissions — real-time judging at scale.
+              Engineered for 1000+ concurrent submissions, real-time judging at scale.
             </p>
           </div>
         </div>
@@ -774,7 +779,9 @@ function ResumeSection() {
           </div>
         </div>
         {/* GitHub activity — NOT wrapped in .reveal so GSAP transform doesn't break portal tooltip */}
-        <GitHubStats />
+        <Suspense fallback={null}>
+          <GitHubStats />
+        </Suspense>
       </div>
     </section>
   );
@@ -931,24 +938,38 @@ function HomePage() {
   useEffect(() => {
     if (!splashDone) return;
 
-    // Disable browser scroll restoration — prevents Chrome from jumping to a
-    // mid-section position on refresh, which would confuse ScrollTrigger init
-    window.history.scrollRestoration = "manual";
-    window.scrollTo(0, 0);
+    // Refs set inside the async .then() so the cleanup can reach them
+    let videoObserver: IntersectionObserver | null = null;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let lenis: any = null;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let ST: any = null;
 
-    // ── Lenis smooth scroll ───────────────────────────────────────────────────
-    const lenis = new Lenis({
-      duration: 1.4,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      wheelMultiplier: 0.9,
-    });
-    lenis.on("scroll", () => ScrollTrigger.update());
-    gsap.ticker.add((time: number) => lenis.raf(time * 1000));
-    gsap.ticker.lagSmoothing(0);
-    // When GSAP adds a pin spacer it increases page height; tell Lenis to
-    // recalculate its scroll limit so it doesn't cap before the section ends.
-    ScrollTrigger.addEventListener("refresh", () => lenis.resize());
+    // Dynamically import ScrollTrigger AFTER the splash so its chunk doesn't
+    // block the critical render path — directly reduces TBT on mobile.
+    import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
+      gsap.registerPlugin(ScrollTrigger);
+      ST = ScrollTrigger;
+
+      // Disable browser scroll restoration — prevents Chrome from jumping to a
+      // mid-section position on refresh, which would confuse ScrollTrigger init
+      window.history.scrollRestoration = "manual";
+      window.scrollTo(0, 0);
+
+      // ── Lenis smooth scroll ───────────────────────────────────────────────────
+      const lenisInstance = new Lenis({
+        duration: 1.4,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        wheelMultiplier: 0.9,
+      });
+      lenis = lenisInstance;
+      lenisInstance.on("scroll", () => ScrollTrigger.update());
+      gsap.ticker.add((time: number) => lenisInstance.raf(time * 1000));
+      gsap.ticker.lagSmoothing(0);
+      // When GSAP adds a pin spacer it increases page height; tell Lenis to
+      // recalculate its scroll limit so it doesn't cap before the section ends.
+      ScrollTrigger.addEventListener("refresh", () => lenisInstance.resize());
 
     // ── Progress bar ─────────────────────────────────────────────────────────
     if (progressRef.current) {
@@ -1026,10 +1047,9 @@ function HomePage() {
     // ── Bento cell image parallax on hover is CSS; no extra GSAP needed ──────
 
     // ── Chapter 3: single ScrollTrigger — pin + video + text in onUpdate ────
-    const ch3Video = document.querySelector<HTMLVideoElement>("#ch3-video");
-    const ch3Sec   = document.querySelector<HTMLElement>("#experience");
-    let videoObserver: IntersectionObserver | null = null;
-    if (ch3Sec && ch3Video) {
+      const ch3Video = document.querySelector<HTMLVideoElement>("#ch3-video");
+      const ch3Sec   = document.querySelector<HTMLElement>("#experience");
+      if (ch3Sec && ch3Video) {
       // Lazy-load the video only when the section is ~400px away from viewport
       // so it doesn't compete with hero.mp4 on initial page load.
       videoObserver = new IntersectionObserver(
@@ -1154,11 +1174,12 @@ function HomePage() {
         scrollTrigger: { trigger: "#contact", start: "top 80%", toggleActions: "play none none none" },
       }
     );
+    }); // end import("gsap/ScrollTrigger").then()
 
     return () => {
       videoObserver?.disconnect();
-      lenis.destroy();
-      ScrollTrigger.getAll().forEach((t) => t.kill());
+      lenis?.destroy();
+      ST?.getAll().forEach((t: { kill(): void }) => t.kill());
     };
   }, [splashDone]);
 

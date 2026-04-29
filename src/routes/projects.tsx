@@ -12,7 +12,7 @@ const projects = [
     n: "01",
     name: "Acadlyst",
     tag: "AI-Powered Academic Copilot",
-    body: "A production-grade RAG pipeline (LangChain + Qdrant) for PDF ingestion, semantic chunking, and context-ranked retrieval — with page-level citations, AI summaries, and quiz generation. Async BullMQ + Redis workers keep the UI buttery while heavy AI tasks run in the background. Shipped as a full Next.js SSR SaaS on Vercel + Render with Neon Postgres and Clerk RBAC.",
+    body: "A production-grade RAG pipeline (LangChain + Qdrant) for PDF ingestion, semantic chunking, and context-ranked retrieval, with page-level citations, AI summaries, and quiz generation. Async BullMQ + Redis workers keep the UI buttery while heavy AI tasks run in the background. Shipped as a full Next.js SSR SaaS on Vercel + Render with Neon Postgres and Clerk RBAC.",
     stack: ["Next.js", "React", "Node", "Postgres", "LangChain", "Qdrant", "BullMQ", "Redis", "Clerk"],
     href: "https://github.com/SnehaChouksey",
   },
@@ -35,7 +35,7 @@ const projects = [
     n: "04",
     name: "Zoom Automation Agent",
     tag: "Autonomous Recording Lifecycle",
-    body: "An end-to-end AI agent that manages enterprise Zoom recordings — intelligent classification, YouTube pipeline compression, Drive archival, transcript storage, and failsafe deletion. Replaced an entire manual video-ops workflow.",
+    body: "An end-to-end AI agent that manages enterprise Zoom recordings: intelligent classification, YouTube pipeline compression, Drive archival, transcript storage, and failsafe deletion. Replaced an entire manual video-ops workflow.",
     stack: ["Python", "FastAPI", "Node", "Next.js", "Gemini API", "Google Cloud", "Zoom OAuth", "AWS"],
   },
 ];
@@ -45,7 +45,7 @@ function ProjectsPage() {
     <main className="surface-cream magic-noise min-h-screen">
       <SiteNav />
       <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 pt-36 pb-24">
-      <p className="animate-fade-rise text-xs uppercase tracking-[0.3em] text-muted-foreground mb-6">Chapter three — the things I've made</p>
+      <p className="animate-fade-rise text-xs uppercase tracking-[0.3em] text-muted-foreground mb-6">Chapter three: the things I've made</p>
       <h1 className="animate-fade-rise text-5xl sm:text-7xl leading-[0.95] tracking-tight text-white max-w-4xl" style={serif}>
         Small worlds, <em className="not-italic text-sun">built one decision at a time.</em>
       </h1>
@@ -82,7 +82,7 @@ function ProjectsPage() {
       </div>
 
       <div className="mt-20 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-        <p className="text-white/70 max-w-md">Last chapter — saying hello.</p>
+        <p className="text-white/70 max-w-md">Last chapter: saying hello.</p>
         <Link to="/contact" className="liquid-glass rounded-full px-8 py-3 text-sm text-white hover:scale-[1.03] pulse-glow">
           Contact →
         </Link>
