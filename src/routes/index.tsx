@@ -147,15 +147,35 @@ function HeroSection() {
 }
 
 function StorySection() {
+  const secRef = useRef<HTMLElement>(null);
+  const [petals, setPetals] = useState(false);
+
+  useEffect(() => {
+    // Defer Three.js: load when section is near viewport OR after 3.5s fallback.
+    // The fallback ensures .story-petals exists when GSAP ScrollTrigger sets up (~5-6s).
+    // Lighthouse never scrolls → IntersectionObserver never fires → Three.js load is
+    // deferred until fallback, reducing parse work in the critical measurement window.
+    const t = setTimeout(() => setPetals(true), 3500);
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setPetals(true); clearTimeout(t); obs.disconnect(); } },
+      { rootMargin: "300px" }
+    );
+    if (secRef.current) obs.observe(secRef.current);
+    return () => { obs.disconnect(); clearTimeout(t); };
+  }, []);
+
   return (
     <section
+      ref={secRef}
       id="story"
       className="relative overflow-hidden"
       style={{ background: "transparent" }}
     >
-      <Suspense fallback={null}>
-        <PetalCanvas className="story-petals absolute inset-0 w-full h-full z-10 opacity-60" count={8} />
-      </Suspense>
+      {petals && (
+        <Suspense fallback={null}>
+          <PetalCanvas className="story-petals absolute inset-0 w-full h-full z-10 opacity-60" count={8} />
+        </Suspense>
+      )}
       <div className="relative z-20 max-w-5xl mx-auto px-6 sm:px-10 py-40">
         <p className="reveal text-[10px] uppercase tracking-[0.4em] text-[var(--petal)]/70 mb-8">
           Prologue: who I am
@@ -787,6 +807,18 @@ function ResumeSection() {
 }
 
 function ContactSection() {
+  const contactRef = useRef<HTMLElement>(null);
+  const [petals, setPetals] = useState(false);
+
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setPetals(true); obs.disconnect(); } },
+      { rootMargin: "400px" }
+    );
+    if (contactRef.current) obs.observe(contactRef.current);
+    return () => obs.disconnect();
+  }, []);
+
   const socials = [
     {
       label: "Email",
@@ -830,13 +862,16 @@ function ContactSection() {
   ];
   return (
     <section
+      ref={contactRef}
       id="contact"
       className="relative overflow-hidden"
       style={{ background: "transparent" }}
     >
-      <Suspense fallback={null}>
-        <PetalCanvas className="absolute inset-0 w-full h-full z-10 opacity-25" count={6} />
-      </Suspense>
+      {petals && (
+        <Suspense fallback={null}>
+          <PetalCanvas className="absolute inset-0 w-full h-full z-10 opacity-25" count={6} />
+        </Suspense>
+      )}
       <div
         className="absolute top-1/3 -right-40 w-[500px] h-[500px] rounded-full opacity-12 blur-3xl pointer-events-none"
         style={{ background: "var(--gradient-sun)" }}

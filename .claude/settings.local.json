@@ -33,7 +33,9 @@
       "Bash(cd \"D:\\\\projects\\\\silent-rise-main\" && npx tsc --noEmit 2>&1 | head -50)",
       "Bash(cd \"D:\\\\projects\\\\silent-rise-main\" && npx vite build 2>&1 | tail -20)",
       "Bash(cd \"D:\\\\projects\\\\silent-rise-main\" && npx vite build 2>&1 | tail -25)",
-      "WebFetch(domain:pagespeed.web.dev)"
+      "WebFetch(domain:pagespeed.web.dev)",
+      "WebFetch(domain:sneha-umber.vercel.app)",
+      "WebFetch(domain:www.googleapis.com)"
     ]
   },
   "enabledPlugins": {
