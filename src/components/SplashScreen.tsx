@@ -62,7 +62,7 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[100] flex flex-col items-center justify-center"
+      className="fixed inset-0 z-[100] flex flex-col items-center justify-center text-center px-6"
       style={{ background: "linear-gradient(180deg, #0a0818 0%, #1a1130 100%)" }}
     >
       {/* Ambient glow */}

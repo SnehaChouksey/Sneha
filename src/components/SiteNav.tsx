@@ -46,7 +46,20 @@ export function SiteNav() {
   }, [menuOpen]);
 
   return (
-    <nav className="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-[min(96vw,580px)]">
+    <>
+      {/* Blurred backdrop strip so scrolling content doesn't read as clutter behind the nav */}
+      <div
+        className="fixed top-0 left-0 right-0 z-40 pointer-events-none"
+        style={{
+          height: "110px",
+          backdropFilter: "blur(14px)",
+          WebkitBackdropFilter: "blur(14px)",
+          background: "linear-gradient(to bottom, rgba(8,6,20,0.55) 0%, rgba(8,6,20,0.25) 60%, rgba(8,6,20,0) 100%)",
+          maskImage: "linear-gradient(to bottom, black 0%, black 55%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 55%, transparent 100%)",
+        }}
+      />
+      <nav className="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-[min(96vw,580px)]">
       {/* Main pill */}
       <div className="liquid-glass rounded-full px-3 py-2 flex items-center justify-center">
         {/* Desktop nav */}
@@ -122,6 +135,7 @@ export function SiteNav() {
           ))}
         </div>
       )}
-    </nav>
+      </nav>
+    </>
   );
 }

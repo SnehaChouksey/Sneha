@@ -9,11 +9,11 @@ const serif = { fontFamily: "'Instrument Serif', serif" };
 
 function WorkPage() {
   const skills = [
-    { group: "Languages", items: ["TypeScript", "JavaScript", "Python", "Java"] },
+    { group: "Languages", items: ["TypeScript", "JavaScript", "Python", "Java", "HTML/CSS"] },
     { group: "Frontend", items: ["Next.js", "React", "Tailwind", "Shadcn/UI", "Framer Motion", "GSAP"] },
-    { group: "Backend & Data", items: ["Node.js", "Express", "FastAPI", "PostgreSQL", "MongoDB", "Redis", "BullMQ", "WebSockets"] },
-    { group: "Generative AI", items: ["LangChain", "LangGraph", "RAG", "Ollama", "MCP", "Claude / GPT-4 / Gemini / Groq", "Qdrant", "Prompt + Context Eng."] },
-    { group: "Cloud & DevOps", items: ["AWS", "Vercel", "Render", "Vultr", "Neon", "Firebase", "Docker", "OAuth 2.0"] },
+    { group: "Backend & Data", items: ["Node.js", "Express", "FastAPI", "REST APIs", "WebSockets", "PostgreSQL", "MongoDB", "Prisma", "Drizzle ORM", "Redis", "BullMQ"] },
+    { group: "Generative AI", items: ["LangChain", "LangGraph", "RAG Pipelines", "MCP", "AI Agents", "Claude Skills", "Ollama", "Claude / GPT-4 / Gemini / Groq", "Qdrant", "Prompt Engineering", "LLM Evaluation"] },
+    { group: "Cloud & DevOps", items: ["AWS", "GCP", "Vultr VPS", "Vercel", "Supabase", "Neon", "Firebase", "Docker", "Nginx", "Linux", "OAuth 2.0", "Git"] },
     { group: "Product", items: ["OKRs / KPIs", "PRDs", "User Research", "Roadmapping", "Agile"] },
   ];
   return (
@@ -31,8 +31,8 @@ function WorkPage() {
       <div className="animate-fade-rise-delay-2 mt-16 grid grid-cols-1 md:grid-cols-2 gap-6">
         {[
           { title: "Agentic & Generative AI", body: "Multi-agent orchestration with LangGraph, tool-chaining with LangChain, MCP integrations, on-prem inference with Ollama, and RAG pipelines tuned for production traffic." },
-          { title: "Full-Stack Engineering", body: "Next.js SSR, Node + Express, FastAPI services, PostgreSQL on Neon, Redis-backed BullMQ workers, shipped on AWS, Vercel, Render, and Vultr." },
-          { title: "Product Ownership", body: "Defining OKRs, writing PRDs, scoping roadmaps, and turning fuzzy ideas into things people can actually use. Built two production tools end-to-end at Omysha." },
+          { title: "Full-Stack Engineering", body: "Next.js SSR, Node + Express, FastAPI services, PostgreSQL with Prisma/Drizzle on Neon and Supabase, Redis-backed BullMQ workers, shipped on AWS, GCP, Vercel, and Vultr." },
+          { title: "Product Ownership", body: "Defining OKRs, writing PRDs, scoping roadmaps, and turning fuzzy ideas into things people can actually use. Shipped production tools end-to-end at Omysha Foundation and as a freelance engineer for Varenyam Education Centre." },
           { title: "UI & Design Sensibility", body: "I care how it feels. Tailwind + shadcn, Framer Motion micro-interactions, and a soft spot for typography that breathes." },
         ].map((c) => (
           <div key={c.title} className="card-3d liquid-glass rounded-3xl p-7">

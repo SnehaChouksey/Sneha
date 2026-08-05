@@ -198,7 +198,7 @@ function StorySection() {
             user feedback loops. The full stack of everything.
           </p>
         </div>
-        <div className="reveal mt-16 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+        <div className="reveal mt-16 flex flex-wrap justify-center gap-3 sm:grid sm:grid-cols-3 lg:grid-cols-5">
           {[
             { icon: "◎", label: "AI Agent Dev",       sub: "LangGraph · MCP · RAG" },
             { icon: "⚡", label: "Automation Eng.",   sub: "Workflows · Integrations" },
@@ -208,7 +208,7 @@ function StorySection() {
           ].map((item) => (
             <div
               key={item.label}
-              className="story-card card-3d liquid-glass rounded-2xl p-4 flex flex-col items-start gap-2"
+              className="story-card card-3d liquid-glass rounded-2xl p-4 flex flex-col items-start gap-2 w-[calc(50%-0.375rem)] sm:w-auto"
             >
               <span className="text-xl text-sun">{item.icon}</span>
               <p className="text-white text-xs font-medium leading-tight">{item.label}</p>
@@ -260,7 +260,7 @@ const bentoDomains = [
     title: "Full-Stack Engineer",
     subtitle: "Next.js · FastAPI · PostgreSQL · Redis",
     body: "SSR frontends, microservices, databases, async queues, cloud deployments. Every layer, production-ready.",
-    items: ["Next.js", "FastAPI", "PostgreSQL", "Redis", "BullMQ", "AWS · Vercel"],
+    items: ["Next.js", "FastAPI", "PostgreSQL", "Prisma", "Redis", "BullMQ", "AWS · Vercel"],
     img: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop",
     imgFallback: "from-[#0a1420] to-[#0f2030]",
   },
@@ -294,6 +294,8 @@ const row2: Skill[] = [
   { name: "Redis",           icon: "https://cdn.simpleicons.org/redis/DC382D" },
   { name: "MongoDB",         icon: "https://cdn.simpleicons.org/mongodb/47A248" },
   { name: "PostgreSQL",      icon: "https://cdn.simpleicons.org/postgresql/4169E1" },
+  { name: "Prisma",          icon: "https://cdn.simpleicons.org/prisma/ffffff" },
+  { name: "Drizzle ORM",     icon: null },
   { name: "MySQL",           icon: "https://cdn.simpleicons.org/mysql/4479A1" },
   { name: "SQLite",          icon: "https://cdn.simpleicons.org/sqlite/003B57" },
   { name: "Claude",          icon: "https://cdn.simpleicons.org/anthropic/ffffff" },
@@ -308,6 +310,7 @@ const row2: Skill[] = [
   { name: "AI Agents",       icon: null },
   { name: "Claude Skills",   icon: null },
   { name: "Qdrant",          icon: null },
+  { name: "LLM Evaluation",  icon: null },
 ];
 
 const row3: Skill[] = [
@@ -316,9 +319,11 @@ const row3: Skill[] = [
   { name: "Vercel",               icon: "https://cdn.simpleicons.org/vercel/ffffff" },
   { name: "Render",               icon: "https://cdn.simpleicons.org/render/46E3B7" },
   { name: "Neon",                 icon: null },
+  { name: "Supabase",             icon: "https://cdn.simpleicons.org/supabase/3ECF8E" },
   { name: "Google Cloud APIs",    icon: "https://cdn.simpleicons.org/googlecloud/4285F4" },
   { name: "Firebase",             icon: "https://cdn.simpleicons.org/firebase/FFCA28" },
   { name: "Docker",               icon: "https://cdn.simpleicons.org/docker/2496ED" },
+  { name: "Nginx",                icon: "https://cdn.simpleicons.org/nginx/009639" },
   { name: "Linux/Ubuntu",         icon: "https://cdn.simpleicons.org/linux/FCC624" },
   { name: "OAuth 2.0",            icon: null },
   { name: "Zoom OAuth",           icon: "https://cdn.simpleicons.org/zoom/2D8CFF" },
@@ -565,8 +570,9 @@ function ExperienceSection() {
     <section id="experience" style={{ position: "relative", height: "100vh" }}>
 
       {/* ── Full-screen video (paused; GSAP scrubs currentTime) ── */}
-      <video id="ch3-video" muted playsInline preload="none"
+      <video id="ch3-video" muted playsInline preload="none" poster="/chapter3-poster.jpg"
         className="absolute inset-0 w-full h-full object-cover">
+        <source src="/chapter3-mobile.mp4" type="video/mp4" media="(max-width: 640px)" />
         <source src="/chapter3.mp4" type="video/mp4" />
       </video>
 
@@ -620,90 +626,72 @@ function ExperienceSection() {
         </div>
       </div>
 
-      {/* ════════ SCENE 3 — Omysha · left panel ════════ */}
-      <div id="ch3-s3" className="absolute inset-0 flex items-center pointer-events-none"
-        style={{ padding: "0 6vw", opacity: 0, visibility: "hidden" }}>
-        <div style={{ ...glass, padding: "clamp(22px,4vw,44px) clamp(20px,5vw,52px)", maxWidth: "min(500px,calc(100vw - 2.5rem))" }}>
+      {/* ════════ SCENE 3 — Omysha · centered card, everything built there ════════ */}
+      <div id="ch3-s3" className="absolute inset-0 flex items-center justify-center pointer-events-none"
+        style={{ padding: "0 5vw", opacity: 0, visibility: "hidden" }}>
+        <div style={{ ...glass, padding: "clamp(24px,4.5vw,48px) clamp(22px,5.5vw,56px)", maxWidth: "min(680px,calc(100vw - 2.5rem))", textAlign: "center" }}>
           <p style={{ fontFamily: serif, fontSize: "13px", letterSpacing: "0.35em",
-            textTransform: "uppercase", color: "rgba(255,217,122,0.75)", marginBottom: "16px" }}>
-            Jan 2026 – Present
+            textTransform: "uppercase", color: "rgba(255,217,122,0.75)", marginBottom: "14px" }}>
+            Jan 2026 – Jun 2026
           </p>
-          <div style={accentLine} />
-          <h2 style={{ fontFamily: serif, fontSize: "clamp(44px,5.5vw,72px)", lineHeight: 0.9,
-            color: "#fff", textShadow: "0 4px 40px rgba(0,0,0,0.8)", marginBottom: "16px" }}>
-            Omysha<br />Foundation
+          <div style={{ ...accentLine, margin: "0 auto 20px" }} />
+          <h2 style={{ fontFamily: serif, fontSize: "clamp(38px,5vw,58px)", lineHeight: 0.95,
+            color: "#fff", textShadow: "0 4px 40px rgba(0,0,0,0.8)", marginBottom: "10px" }}>
+            Omysha Foundation
           </h2>
-          <p style={{ fontFamily: serif, fontSize: "19px", lineHeight: 1.4,
-            marginBottom: "20px", ...gold }}>
-            AI Product Manager &nbsp;·&nbsp; Full-Stack Dev
+          <p style={{ fontFamily: serif, fontSize: "clamp(22px,3.2vw,34px)", lineHeight: 1.25,
+            marginBottom: "26px", ...gold }}>
+            Full Stack &nbsp;·&nbsp; AI Engineer Intern
           </p>
-          <div style={{ width: "100%", height: "1px", background: "rgba(255,255,255,0.08)", marginBottom: "20px" }} />
-          <p style={{ color: "rgba(255,255,255,0.72)", fontSize: "15px", lineHeight: 1.85 }}>
-            Where ideas became real systems.<br />
-            Where I learned to own outcomes<br />from architecture to shipping.
-          </p>
-        </div>
-      </div>
-
-      {/* ════════ SCENE P1 — Zoom Agent · bottom bar ════════ */}
-      <div id="ch3-p1" className="absolute bottom-0 left-0 right-0 pointer-events-none"
-        style={{ padding: "0 6vw 6vh", opacity: 0, visibility: "hidden" }}>
-        <div style={{ ...glass, padding: "clamp(16px,3vw,28px) clamp(16px,4vw,40px)", display: "flex", alignItems: "center", gap: "clamp(16px,3vw,32px)" }}>
-          <div style={{ width: "4px", height: "56px", background: "linear-gradient(to bottom,#ffd97a,#e89b1a)", borderRadius: "2px", flexShrink: 0 }} />
-          <div>
-            <p style={{ fontFamily: serif, fontSize: "13px", letterSpacing: "0.35em",
-              textTransform: "uppercase", color: "rgba(255,217,122,0.75)", marginBottom: "8px" }}>
-              Project · Shipped
-            </p>
-            <h3 style={{ fontFamily: serif, fontSize: "clamp(26px,3vw,42px)", color: "#fff",
-              lineHeight: 1.1, textShadow: "0 4px 24px rgba(0,0,0,0.8)", marginBottom: "6px" }}>
-              Zoom Automation Agent
-            </h3>
-            <p style={{ color: "rgba(255,255,255,0.68)", fontSize: "14px", lineHeight: 1.7 }}>
-              Autonomous Zoom lifecycle system. Eliminated manual video operations entirely.
-            </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "16px", textAlign: "left" }}>
+            {[
+              { t: "A4G Collab Hub", d: "Contest platform for 200–1000+ participants — PayU payments, 5-track registration, Claude AI-screened judging." },
+              { t: "Recruitment Automation", d: "LinkedIn sourcing + a Claude Skills HR agent. Outreach cut from ~3 hrs to under 3 mins across hundreds of candidates." },
+              { t: "YTZ Zoom Pipeline", d: "A 24/7 daemon for the Zoom recording lifecycle, eliminating ~4 hrs/week of manual video ops." },
+            ].map((item) => (
+              <div key={item.t} style={{ display: "flex", gap: "14px", alignItems: "flex-start" }}>
+                <div style={{ width: "3px", alignSelf: "stretch", background: "linear-gradient(to bottom,#ffd97a,#e89b1a)", borderRadius: "2px", flexShrink: 0 }} />
+                <div>
+                  <p style={{ fontFamily: serif, fontSize: "17px", color: "#fff", marginBottom: "3px" }}>{item.t}</p>
+                  <p style={{ color: "rgba(255,255,255,0.65)", fontSize: "13.5px", lineHeight: 1.6 }}>{item.d}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* ════════ SCENE P2 — AI Contest · bottom bar ════════ */}
-      <div id="ch3-p2" className="absolute bottom-0 left-0 right-0 pointer-events-none"
-        style={{ padding: "0 6vw 6vh", opacity: 0, visibility: "hidden" }}>
-        <div style={{ ...glass, padding: "clamp(16px,3vw,28px) clamp(16px,4vw,40px)", display: "flex", alignItems: "center", gap: "clamp(16px,3vw,32px)" }}>
-          <div style={{ width: "4px", height: "56px", background: "linear-gradient(to bottom,#ffd97a,#e89b1a)", borderRadius: "2px", flexShrink: 0 }} />
-          <div>
-            <p style={{ fontFamily: serif, fontSize: "13px", letterSpacing: "0.35em",
-              textTransform: "uppercase", color: "rgba(255,217,122,0.75)", marginBottom: "8px" }}>
-              Project · Scaled
-            </p>
-            <h3 style={{ fontFamily: serif, fontSize: "clamp(26px,3vw,42px)", color: "#fff",
-              lineHeight: 1.1, textShadow: "0 4px 24px rgba(0,0,0,0.8)", marginBottom: "6px" }}>
-              AI Contest Platform
-            </h3>
-            <p style={{ color: "rgba(255,255,255,0.68)", fontSize: "14px", lineHeight: 1.7 }}>
-              Engineered for 1000+ concurrent submissions, real-time judging at scale.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* ════════ SCENE P3 — Agentic AI · bottom bar ════════ */}
-      <div id="ch3-p3" className="absolute bottom-0 left-0 right-0 pointer-events-none"
-        style={{ padding: "0 6vw 6vh", opacity: 0, visibility: "hidden" }}>
-        <div style={{ ...glass, padding: "clamp(16px,3vw,28px) clamp(16px,4vw,40px)", display: "flex", alignItems: "center", gap: "clamp(16px,3vw,32px)" }}>
-          <div style={{ width: "4px", height: "56px", background: "linear-gradient(to bottom,#ffd97a,#e89b1a)", borderRadius: "2px", flexShrink: 0 }} />
-          <div>
-            <p style={{ fontFamily: serif, fontSize: "13px", letterSpacing: "0.35em",
-              textTransform: "uppercase", color: "rgba(255,217,122,0.75)", marginBottom: "8px" }}>
-              Project · Agentic
-            </p>
-            <h3 style={{ fontFamily: serif, fontSize: "clamp(26px,3vw,42px)", color: "#fff",
-              lineHeight: 1.1, textShadow: "0 4px 24px rgba(0,0,0,0.8)", marginBottom: "6px" }}>
-              Agentic AI Systems
-            </h3>
-            <p style={{ color: "rgba(255,255,255,0.68)", fontSize: "14px", lineHeight: 1.7 }}>
-              Multi-agent workflows using LangGraph, RAG pipelines, and MCP integrations.
-            </p>
+      {/* ════════ SCENE 3b — Varenyam · centered card, everything built there ════════ */}
+      <div id="ch3-s3b" className="absolute inset-0 flex items-center justify-center pointer-events-none"
+        style={{ padding: "0 5vw", opacity: 0, visibility: "hidden" }}>
+        <div style={{ ...glass, padding: "clamp(24px,4.5vw,48px) clamp(22px,5.5vw,56px)", maxWidth: "min(680px,calc(100vw - 2.5rem))", textAlign: "center" }}>
+          <p style={{ fontFamily: serif, fontSize: "13px", letterSpacing: "0.35em",
+            textTransform: "uppercase", color: "rgba(255,217,122,0.75)", marginBottom: "14px" }}>
+            May 2026 – Jul 2026
+          </p>
+          <div style={{ ...accentLine, margin: "0 auto 20px" }} />
+          <h2 style={{ fontFamily: serif, fontSize: "clamp(38px,5vw,58px)", lineHeight: 0.95,
+            color: "#fff", textShadow: "0 4px 40px rgba(0,0,0,0.8)", marginBottom: "10px" }}>
+            Varenyam Education Centre
+          </h2>
+          <p style={{ fontFamily: serif, fontSize: "clamp(22px,3.2vw,34px)", lineHeight: 1.25,
+            marginBottom: "26px", ...gold }}>
+            Freelance Full Stack Software Engineer
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "16px", textAlign: "left" }}>
+            {[
+              { t: "Question Bank & Test Paper Generator", d: "29 REST routes, 3-tier RBAC, and an AI-assisted bulk-import pipeline for scanned question papers." },
+              { t: "Security & Performance", d: "Fixed a JWT algorithm-confusion vulnerability and an SSRF gap; cut median API latency from 3.5s to under 1s." },
+              { t: "Public Website", d: "Engineered the institute's public-facing site with scalable backend APIs, serving 3,000+ concurrent users." },
+            ].map((item) => (
+              <div key={item.t} style={{ display: "flex", gap: "14px", alignItems: "flex-start" }}>
+                <div style={{ width: "3px", alignSelf: "stretch", background: "linear-gradient(to bottom,#ffd97a,#e89b1a)", borderRadius: "2px", flexShrink: 0 }} />
+                <div>
+                  <p style={{ fontFamily: serif, fontSize: "17px", color: "#fff", marginBottom: "3px" }}>{item.t}</p>
+                  <p style={{ color: "rgba(255,255,255,0.65)", fontSize: "13.5px", lineHeight: 1.6 }}>{item.d}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -712,8 +700,8 @@ function ExperienceSection() {
       <div id="ch3-s4" className="absolute inset-0 flex items-center justify-center pointer-events-none"
         style={{ opacity: 0, visibility: "hidden" }}>
         <div style={{ ...glass, padding: "clamp(24px,5vw,52px) clamp(20px,6vw,64px)", maxWidth: "min(680px,calc(100vw - 2.5rem))", textAlign: "center" }}>
-          <p style={{ fontFamily: serif, fontSize: "13px", letterSpacing: "0.4em",
-            textTransform: "uppercase", color: "rgba(255,217,122,0.8)", marginBottom: "16px" }}>
+          <p style={{ fontFamily: serif, fontSize: "clamp(14px,1.6vw,16px)", letterSpacing: "0.4em",
+            textTransform: "uppercase", color: "rgba(255,217,122,0.85)", marginBottom: "16px" }}>
             Recognition
           </p>
           <div style={{ ...accentLine, margin: "0 auto 24px" }} />
@@ -721,7 +709,7 @@ function ExperienceSection() {
             lineHeight: 0.95, textShadow: "0 4px 40px rgba(0,0,0,0.7)", marginBottom: "12px" }}>
             Milestones
           </h2>
-          <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "16px", marginBottom: "36px",
+          <p style={{ color: "rgba(255,255,255,0.68)", fontSize: "clamp(15px,1.8vw,18px)", marginBottom: "36px",
             letterSpacing: "0.05em" }}>
             Recognition earned through building.
           </p>
@@ -729,24 +717,24 @@ function ExperienceSection() {
             border: "1px solid rgba(255,255,255,0.08)" }}>
             <div style={{ flex: 1, padding: "28px 32px",
               background: "rgba(255,217,122,0.06)", borderRight: "1px solid rgba(255,255,255,0.08)" }}>
-              <p style={{ fontFamily: serif, fontSize: "12px", letterSpacing: "0.3em",
-                textTransform: "uppercase", color: "rgba(255,217,122,0.8)", marginBottom: "10px" }}>
-                CodeHunt Hackathon
+              <p style={{ fontFamily: serif, fontSize: "clamp(13px,1.5vw,15px)", letterSpacing: "0.25em",
+                textTransform: "uppercase", color: "rgba(255,217,122,0.9)", marginBottom: "10px" }}>
+                CodeHunt by GDG JEC
               </p>
-              <p style={{ fontFamily: serif, fontSize: "26px", color: "#fff", marginBottom: "4px" }}>
-                1st Runner-Up
+              <p style={{ fontFamily: serif, fontSize: "clamp(28px,3.4vw,36px)", color: "#fff", marginBottom: "4px" }}>
+                2nd Place
               </p>
-              <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "14px" }}>Among 100 teams</p>
+              <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "clamp(14px,1.6vw,16px)" }}>Among 200+ participants</p>
             </div>
             <div style={{ flex: 1, padding: "28px 32px", background: "rgba(255,217,122,0.04)" }}>
-              <p style={{ fontFamily: serif, fontSize: "12px", letterSpacing: "0.3em",
-                textTransform: "uppercase", color: "rgba(255,217,122,0.8)", marginBottom: "10px" }}>
+              <p style={{ fontFamily: serif, fontSize: "clamp(13px,1.5vw,15px)", letterSpacing: "0.25em",
+                textTransform: "uppercase", color: "rgba(255,217,122,0.9)", marginBottom: "10px" }}>
                 Smart India Hackathon
               </p>
-              <p style={{ fontFamily: serif, fontSize: "26px", color: "#fff", marginBottom: "4px" }}>
-                Top 5 <span style={{ fontSize: "16px", color: "rgba(255,255,255,0.55)" }}>(internally)</span>
+              <p style={{ fontFamily: serif, fontSize: "clamp(28px,3.4vw,36px)", color: "#fff", marginBottom: "4px" }}>
+                Top 5 <span style={{ fontSize: "clamp(15px,1.8vw,18px)", color: "rgba(255,255,255,0.7)" }}>internally</span>
               </p>
-              <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "14px" }}>Full-stack AI under pressure</p>
+              <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "clamp(14px,1.6vw,16px)" }}>Full-stack AI under pressure</p>
             </div>
           </div>
         </div>
@@ -892,7 +880,7 @@ function ContactSection() {
         {/* Résumé CTA */}
         <div className="reveal mt-8">
           <a
-            href="https://drive.google.com/file/d/1y2Pm0xKcTJupfNkYyfYARbgE_7bVRdlN/view?usp=sharing"
+            href="https://drive.google.com/file/d/1BMwYGtcPx9faHjSS3yKmzExV3TPwDOTw/view?usp=sharing"
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-sm font-medium transition-all duration-300"
@@ -1106,14 +1094,12 @@ function HomePage() {
 
       // Scene definitions: [id, inP, outP, xFrom, yFrom]
       const SCENES: [string, number, number, number, number][] = [
-        ["ch3-s1", 0.00, 0.17,  0,   32],
-        ["ch3-s2", 0.18, 0.36,  40,   0],
-        ["ch3-s3", 0.36, 0.57, -40,   0],
-        ["ch3-p1", 0.55, 0.67,  0,   40],
-        ["ch3-p2", 0.65, 0.76,  0,   40],
-        ["ch3-p3", 0.74, 0.85,  0,   40],
-        ["ch3-s4", 0.83, 0.94,  0,   32],
-        ["ch3-s5", 0.93, 1.00,  0,   24],
+        ["ch3-s1",  0.00, 0.16,  0,   32],
+        ["ch3-s2",  0.15, 0.34,  40,   0],
+        ["ch3-s3",  0.33, 0.58,  0,   32],
+        ["ch3-s3b", 0.57, 0.80,  0,   32],
+        ["ch3-s4",  0.79, 0.93,  0,   32],
+        ["ch3-s5",  0.92, 1.00,  0,   24],
       ];
 
       // Build quickSetters and hard-set everything invisible up front
