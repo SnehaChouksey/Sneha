@@ -567,12 +567,13 @@ function ExperienceSection() {
   };
 
   return (
-    <section id="experience" style={{ position: "relative", height: "100vh" }}>
+    <>
+    {/* Desktop/tablet — full cinematic scroll-scrubbed chapter, unchanged */}
+    <section id="experience" className="hidden sm:block" style={{ position: "relative", height: "100vh" }}>
 
       {/* ── Full-screen video (paused; GSAP scrubs currentTime) ── */}
       <video id="ch3-video" muted playsInline preload="none" poster="/chapter3-poster.jpg"
         className="absolute inset-0 w-full h-full object-cover">
-        <source src="/chapter3-mobile.mp4" type="video/mp4" media="(max-width: 640px)" />
         <source src="/chapter3.mp4" type="video/mp4" />
       </video>
 
@@ -764,6 +765,93 @@ function ExperienceSection() {
       </div>
 
     </section>
+
+    {/* Mobile — scrubbing full-screen video against scroll is smooth on desktop
+        GPUs but seeks-per-tick made this section lag badly on phones. Below sm,
+        skip the video/pin entirely and ship the same story as a plain, static
+        stacked timeline — no scroll-linked JS, nothing to lag. */}
+    <section id="experience-mobile" className="sm:hidden relative">
+      <div className="max-w-xl mx-auto px-6 pt-24 pb-20">
+        <p className="text-[11px] uppercase tracking-[0.4em] text-[var(--petal)]/70 mb-3">Chapter III</p>
+        <h2 className="text-4xl leading-[0.95] text-white mb-4" style={{ fontFamily: serif }}>
+          Places I Have <span className="text-sun">Been To</span>
+        </h2>
+        <p className="text-white/65 text-[15px] leading-relaxed mb-10">
+          Walking through the places that shaped who I am and who I&rsquo;m becoming.
+        </p>
+
+        <div className="space-y-5">
+          <article className="card-3d liquid-glass rounded-2xl p-6">
+            <p className="text-[10px] uppercase tracking-[0.25em] text-[var(--petal)]/75 mb-2">B.Tech CSE &nbsp;·&nbsp; 2023–2027</p>
+            <h3 className="text-2xl text-white mb-2" style={{ fontFamily: serif }}>Jabalpur Engineering College</h3>
+            <p className="text-white/65 text-sm leading-relaxed">Where curiosity became foundation. Where engineering shaped the way I think.</p>
+          </article>
+
+          <article className="card-3d liquid-glass rounded-2xl p-6">
+            <p className="text-[10px] uppercase tracking-[0.25em] text-[var(--petal)]/75 mb-2">Jan 2026 – Jun 2026</p>
+            <h3 className="text-2xl text-white mb-1" style={{ fontFamily: serif }}>Omysha Foundation</h3>
+            <p className="text-sun text-base mb-4" style={{ fontFamily: serif }}>Full Stack &nbsp;·&nbsp; AI Engineer Intern</p>
+            <div className="space-y-3">
+              {[
+                { t: "A4G Collab Hub", d: "Contest platform for 200–1000+ participants — PayU payments, 5-track registration, Claude AI-screened judging." },
+                { t: "Recruitment Automation", d: "LinkedIn sourcing + a Claude Skills HR agent. Outreach cut from ~3 hrs to under 3 mins." },
+                { t: "YTZ Zoom Pipeline", d: "A 24/7 daemon for the Zoom recording lifecycle, eliminating ~4 hrs/week of manual video ops." },
+              ].map((item) => (
+                <div key={item.t} className="flex gap-3 items-start">
+                  <div className="w-[3px] self-stretch rounded-full flex-shrink-0" style={{ background: "linear-gradient(to bottom,#ffd97a,#e89b1a)" }} />
+                  <div>
+                    <p className="text-white text-[15px]" style={{ fontFamily: serif }}>{item.t}</p>
+                    <p className="text-white/60 text-[13px] leading-relaxed">{item.d}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <article className="card-3d liquid-glass rounded-2xl p-6">
+            <p className="text-[10px] uppercase tracking-[0.25em] text-[var(--petal)]/75 mb-2">May 2026 – Jul 2026</p>
+            <h3 className="text-2xl text-white mb-1" style={{ fontFamily: serif }}>Varenyam Education Centre</h3>
+            <p className="text-sun text-base mb-4" style={{ fontFamily: serif }}>Freelance Full Stack Software Engineer</p>
+            <div className="space-y-3">
+              {[
+                { t: "Question Bank & Test Paper Generator", d: "29 REST routes, 3-tier RBAC, and an AI-assisted bulk-import pipeline for scanned question papers." },
+                { t: "Security & Performance", d: "Fixed a JWT algorithm-confusion vulnerability and an SSRF gap; cut median API latency from 3.5s to under 1s." },
+                { t: "Public Website", d: "Engineered the institute's public-facing site with scalable backend APIs, serving 3,000+ concurrent users." },
+              ].map((item) => (
+                <div key={item.t} className="flex gap-3 items-start">
+                  <div className="w-[3px] self-stretch rounded-full flex-shrink-0" style={{ background: "linear-gradient(to bottom,#ffd97a,#e89b1a)" }} />
+                  <div>
+                    <p className="text-white text-[15px]" style={{ fontFamily: serif }}>{item.t}</p>
+                    <p className="text-white/60 text-[13px] leading-relaxed">{item.d}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <article className="card-3d liquid-glass rounded-2xl p-6">
+            <p className="text-[10px] uppercase tracking-[0.25em] text-[var(--petal)]/75 mb-4">Recognition &nbsp;·&nbsp; Milestones</p>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="rounded-xl p-4" style={{ background: "rgba(255,217,122,0.06)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                <p className="text-[9px] uppercase tracking-[0.2em] text-[var(--petal)]/80 mb-2">CodeHunt · GDG JEC</p>
+                <p className="text-xl text-white mb-1" style={{ fontFamily: serif }}>2nd Place</p>
+                <p className="text-white/60 text-xs">Among 200+ participants</p>
+              </div>
+              <div className="rounded-xl p-4" style={{ background: "rgba(255,217,122,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                <p className="text-[9px] uppercase tracking-[0.2em] text-[var(--petal)]/80 mb-2">Smart India Hackathon</p>
+                <p className="text-xl text-white mb-1" style={{ fontFamily: serif }}>Top 5</p>
+                <p className="text-white/60 text-xs">Internally, under pressure</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <p className="text-center text-white/45 text-lg mt-12" style={{ fontFamily: serif }}>
+          Still building. Still becoming.
+        </p>
+      </div>
+    </section>
+    </>
   );
 }
 
@@ -1074,7 +1162,12 @@ function HomePage() {
     // ── Chapter 3: single ScrollTrigger — pin + video + text in onUpdate ────
       const ch3Video = document.querySelector<HTMLVideoElement>("#ch3-video");
       const ch3Sec   = document.querySelector<HTMLElement>("#experience");
-      if (ch3Sec && ch3Video) {
+      // Below sm, #experience (and its video) isn't even rendered — the mobile
+      // markup is a plain static timeline instead (see #experience-mobile in
+      // JSX) because scrubbing video.currentTime on every scroll tick, which
+      // is smooth on desktop, made phones seek constantly and lag badly.
+      const isMobileCh3 = window.matchMedia("(max-width: 640px)").matches;
+      if (!isMobileCh3 && ch3Sec && ch3Video) {
       // Lazy-load the video only when the section is ~400px away from viewport
       // so it doesn't compete with hero.mp4 on initial page load.
       videoObserver = new IntersectionObserver(
