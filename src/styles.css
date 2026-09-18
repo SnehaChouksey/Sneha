@@ -580,7 +580,7 @@ a:hover .contact-link-line {
   to   { transform: translateX(0); }
 }
 .marquee-fwd { animation: marquee 48s linear infinite; }
-.marquee-rev { animation: marquee-reverse 42s linear infinite; }
+.marquee-rev { animation: marquee-reverse 56s linear infinite; }
 .marquee-fwd:hover,
 .marquee-rev:hover { animation-play-state: paused; }
 .marquee-mask {

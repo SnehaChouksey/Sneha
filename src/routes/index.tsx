@@ -26,6 +26,7 @@ export const Route = createFileRoute("/")({
 
 const ROLES = [
   "Full Stack Engineer",
+  "Applied AI Engineer",
   "Generative AI Engineer",
   "AI Product Manager",
   "Automation Engineer",
@@ -229,8 +230,8 @@ const bentoDomains = [
     icon: "◎",
     title: "AI Systems & GenAI",
     subtitle: "Agentic AI · RAG Pipelines · MCP · LangGraph",
-    body: "Multi-agent orchestration, RAG pipelines tuned for production, on-prem inference with Ollama, MCP integrations. Systems that reason, retrieve, and act without human loops.",
-    items: ["LangGraph", "LangChain", "RAG", "Ollama", "MCP", "Claude · GPT-4 · Gemini", "Qdrant"],
+    body: "Multi-agent orchestration, RAG pipelines tuned for production, on-prem inference with Ollama, MCP integrations, and evaluation harnesses that keep the output honest. Systems that reason, retrieve, and act without human loops.",
+    items: ["LangGraph", "LangChain", "RAG", "Qdrant", "MCP", "Claude Skills", "AI Agents", "Prompt Engineering", "LLM Evaluation", "Ollama", "Claude · GPT-4 · Gemini"],
     img: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?q=80&w=1200&auto=format&fit=crop",
     imgFallback: "from-[#0a0f1e] to-[#1a1040]",
   },
@@ -305,12 +306,21 @@ const row2: Skill[] = [
   { name: "Ollama",          icon: "https://cdn.simpleicons.org/ollama/ffffff" },
   { name: "LangChain",       icon: null },
   { name: "LangGraph",       icon: null },
+  { name: "LangGraph.js",    icon: null },
   { name: "RAG Pipelines",   icon: null },
+  { name: "Semantic Chunking", icon: null },
+  { name: "Qdrant",          icon: null },
+  { name: "Vector Search",   icon: null },
   { name: "MCP",             icon: null },
   { name: "AI Agents",       icon: null },
+  { name: "Multi-Agent Orchestration", icon: null },
   { name: "Claude Skills",   icon: null },
-  { name: "Qdrant",          icon: null },
+  { name: "Prompt Engineering", icon: null },
+  { name: "Context Engineering", icon: null },
   { name: "LLM Evaluation",  icon: null },
+  { name: "LLM-as-Judge",    icon: null },
+  { name: "Gemini Vision",   icon: null },
+  { name: "E2B Sandboxes",   icon: null },
 ];
 
 const row3: Skill[] = [
@@ -341,8 +351,8 @@ function WorkSection() {
       className="relative"
       style={{ background: "transparent" }}
     >
-      <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 py-36">
-        <p className="reveal text-[10px] uppercase tracking-[0.4em] text-[var(--petal)]/70 mb-8">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 py-20 sm:py-24">
+        <p className="reveal text-[10px] uppercase tracking-[0.4em] text-[var(--petal)]/70 mb-5">
           Chapter I: what I build
         </p>
         <h2 className="reveal text-5xl sm:text-7xl text-white leading-[0.95] max-w-3xl" style={serif}>
@@ -351,7 +361,7 @@ function WorkSection() {
         </h2>
 
         {/* ── Bento grid ── */}
-        <div className="reveal mt-16 grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-auto">
+        <div className="reveal mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-auto">
           {bentoDomains.map((d, i) => {
             const isLarge = d.size === "large";
             return (
@@ -360,7 +370,7 @@ function WorkSection() {
                 className={`work-card bento-cell card-3d rounded-3xl overflow-hidden relative group ${
                   isLarge ? "md:col-span-2" : "col-span-1"
                 }`}
-                style={{ minHeight: isLarge ? "240px" : "180px" }}
+                style={{ minHeight: isLarge ? "200px" : "160px" }}
               >
                 {/* Background image or gradient */}
                 {d.img ? (
@@ -411,7 +421,7 @@ function WorkSection() {
                     {d.body}
                   </p>
                   <div className="flex flex-wrap gap-2">
-                    {d.items.slice(0, isLarge ? 6 : 4).map((item) => (
+                    {d.items.slice(0, isLarge ? 8 : 5).map((item) => (
                       <span
                         key={item}
                         className="text-[9px] px-3 py-1 rounded-full tracking-wide"
@@ -432,8 +442,8 @@ function WorkSection() {
         </div>
 
         {/* ── Toolkit marquee ── */}
-        <div className="reveal mt-20">
-          <h3 className="text-2xl text-white mb-8" style={serif}>The toolkit</h3>
+        <div className="reveal mt-14">
+          <h3 className="text-2xl text-white mb-6" style={serif}>The toolkit</h3>
 
           {/* Row 1 — Languages + Frontend → */}
           <div className="overflow-hidden marquee-mask mb-3">
@@ -627,8 +637,43 @@ function ExperienceSection() {
         </div>
       </div>
 
-      {/* ════════ SCENE 3 — Omysha · centered card, everything built there ════════ */}
+      {/* ════════ SCENE 3 — Varenyam · centered card, everything built there ════════ */}
       <div id="ch3-s3" className="absolute inset-0 flex items-center justify-center pointer-events-none"
+        style={{ padding: "0 5vw", opacity: 0, visibility: "hidden" }}>
+        <div style={{ ...glass, padding: "clamp(24px,4.5vw,48px) clamp(22px,5.5vw,56px)", maxWidth: "min(680px,calc(100vw - 2.5rem))", textAlign: "center" }}>
+          <p style={{ fontFamily: serif, fontSize: "13px", letterSpacing: "0.35em",
+            textTransform: "uppercase", color: "rgba(255,217,122,0.75)", marginBottom: "14px" }}>
+            Oct 2025 – Dec 2025
+          </p>
+          <div style={{ ...accentLine, margin: "0 auto 20px" }} />
+          <h2 style={{ fontFamily: serif, fontSize: "clamp(38px,5vw,58px)", lineHeight: 0.95,
+            color: "#fff", textShadow: "0 4px 40px rgba(0,0,0,0.8)", marginBottom: "10px" }}>
+            Varenyam Education Centre
+          </h2>
+          <p style={{ fontFamily: serif, fontSize: "clamp(22px,3.2vw,34px)", lineHeight: 1.25,
+            marginBottom: "26px", ...gold }}>
+            Freelance Full Stack Software Engineer
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "16px", textAlign: "left" }}>
+            {[
+              { t: "Question Bank & Test Paper Generator", d: "29 REST routes, 3-tier RBAC, and an AI-assisted bulk-import pipeline for scanned question papers." },
+              { t: "Security & Performance", d: "Fixed a JWT algorithm-confusion vulnerability and an SSRF gap; cut median API latency from 3.5s to under 1s." },
+              { t: "Public Website", d: "Engineered the institute's public-facing site with scalable backend APIs, serving 3,000+ users." },
+            ].map((item) => (
+              <div key={item.t} style={{ display: "flex", gap: "14px", alignItems: "flex-start" }}>
+                <div style={{ width: "3px", alignSelf: "stretch", background: "linear-gradient(to bottom,#ffd97a,#e89b1a)", borderRadius: "2px", flexShrink: 0 }} />
+                <div>
+                  <p style={{ fontFamily: serif, fontSize: "17px", color: "#fff", marginBottom: "3px" }}>{item.t}</p>
+                  <p style={{ color: "rgba(255,255,255,0.65)", fontSize: "13.5px", lineHeight: 1.6 }}>{item.d}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ════════ SCENE 3b — Omysha · centered card, everything built there ════════ */}
+      <div id="ch3-s3b" className="absolute inset-0 flex items-center justify-center pointer-events-none"
         style={{ padding: "0 5vw", opacity: 0, visibility: "hidden" }}>
         <div style={{ ...glass, padding: "clamp(24px,4.5vw,48px) clamp(22px,5.5vw,56px)", maxWidth: "min(680px,calc(100vw - 2.5rem))", textAlign: "center" }}>
           <p style={{ fontFamily: serif, fontSize: "13px", letterSpacing: "0.35em",
@@ -648,7 +693,7 @@ function ExperienceSection() {
             {[
               { t: "A4G Collab Hub", d: "Contest platform for 200–1000+ participants — PayU payments, 5-track registration, Claude AI-screened judging." },
               { t: "Recruitment Automation", d: "LinkedIn sourcing + a Claude Skills HR agent. Outreach cut from ~3 hrs to under 3 mins across hundreds of candidates." },
-              { t: "YTZ Zoom Pipeline", d: "A 24/7 daemon for the Zoom recording lifecycle, eliminating ~4 hrs/week of manual video ops." },
+              { t: "YTZ Zoom Pipeline", d: "A Python + FastAPI + Gemini pipeline on AWS, eliminating ~4 hrs/week of manual video ops." },
             ].map((item) => (
               <div key={item.t} style={{ display: "flex", gap: "14px", alignItems: "flex-start" }}>
                 <div style={{ width: "3px", alignSelf: "stretch", background: "linear-gradient(to bottom,#ffd97a,#e89b1a)", borderRadius: "2px", flexShrink: 0 }} />
@@ -662,28 +707,28 @@ function ExperienceSection() {
         </div>
       </div>
 
-      {/* ════════ SCENE 3b — Varenyam · centered card, everything built there ════════ */}
-      <div id="ch3-s3b" className="absolute inset-0 flex items-center justify-center pointer-events-none"
+      {/* ════════ SCENE 3c — CaratSense AI · centered card, current role ════════ */}
+      <div id="ch3-s3c" className="absolute inset-0 flex items-center justify-center pointer-events-none"
         style={{ padding: "0 5vw", opacity: 0, visibility: "hidden" }}>
         <div style={{ ...glass, padding: "clamp(24px,4.5vw,48px) clamp(22px,5.5vw,56px)", maxWidth: "min(680px,calc(100vw - 2.5rem))", textAlign: "center" }}>
           <p style={{ fontFamily: serif, fontSize: "13px", letterSpacing: "0.35em",
             textTransform: "uppercase", color: "rgba(255,217,122,0.75)", marginBottom: "14px" }}>
-            May 2026 – Jul 2026
+            Aug 2026 – Present
           </p>
           <div style={{ ...accentLine, margin: "0 auto 20px" }} />
           <h2 style={{ fontFamily: serif, fontSize: "clamp(38px,5vw,58px)", lineHeight: 0.95,
             color: "#fff", textShadow: "0 4px 40px rgba(0,0,0,0.8)", marginBottom: "10px" }}>
-            Varenyam Education Centre
+            CaratSense AI
           </h2>
           <p style={{ fontFamily: serif, fontSize: "clamp(22px,3.2vw,34px)", lineHeight: 1.25,
             marginBottom: "26px", ...gold }}>
-            Freelance Full Stack Software Engineer
+            Software Developer Intern
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: "16px", textAlign: "left" }}>
             {[
-              { t: "Question Bank & Test Paper Generator", d: "29 REST routes, 3-tier RBAC, and an AI-assisted bulk-import pipeline for scanned question papers." },
-              { t: "Security & Performance", d: "Fixed a JWT algorithm-confusion vulnerability and an SSRF gap; cut median API latency from 3.5s to under 1s." },
-              { t: "Public Website", d: "Engineered the institute's public-facing site with scalable backend APIs, serving 3,000+ concurrent users." },
+              { t: "Production Software", d: "Develop and maintain production software for client businesses across backend codebases, APIs, and integrations." },
+              { t: "Backend Workflows", d: "Node.js services, REST APIs, webhooks, and RBAC — from implementation through deployment." },
+              { t: "Production Firefighting", d: "Request routing, unsafe alert triggers, message delivery, and integration failures, traced and fixed live." },
             ].map((item) => (
               <div key={item.t} style={{ display: "flex", gap: "14px", alignItems: "flex-start" }}>
                 <div style={{ width: "3px", alignSelf: "stretch", background: "linear-gradient(to bottom,#ffd97a,#e89b1a)", borderRadius: "2px", flexShrink: 0 }} />
@@ -733,7 +778,7 @@ function ExperienceSection() {
                 Smart India Hackathon
               </p>
               <p style={{ fontFamily: serif, fontSize: "clamp(28px,3.4vw,36px)", color: "#fff", marginBottom: "4px" }}>
-                Top 5 <span style={{ fontSize: "clamp(15px,1.8vw,18px)", color: "rgba(255,255,255,0.7)" }}>internally</span>
+                Top 5 <span style={{ fontSize: "clamp(15px,1.8vw,18px)", color: "rgba(255,255,255,0.7)" }}>nationally</span>
               </p>
               <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "clamp(14px,1.6vw,16px)" }}>Full-stack AI under pressure</p>
             </div>
@@ -788,14 +833,14 @@ function ExperienceSection() {
           </article>
 
           <article className="card-3d liquid-glass rounded-2xl p-6">
-            <p className="text-[10px] uppercase tracking-[0.25em] text-[var(--petal)]/75 mb-2">Jan 2026 – Jun 2026</p>
-            <h3 className="text-2xl text-white mb-1" style={{ fontFamily: serif }}>Omysha Foundation</h3>
-            <p className="text-sun text-base mb-4" style={{ fontFamily: serif }}>Full Stack &nbsp;·&nbsp; AI Engineer Intern</p>
+            <p className="text-[10px] uppercase tracking-[0.25em] text-[var(--petal)]/75 mb-2">Oct 2025 – Dec 2025</p>
+            <h3 className="text-2xl text-white mb-1" style={{ fontFamily: serif }}>Varenyam Education Centre</h3>
+            <p className="text-sun text-base mb-4" style={{ fontFamily: serif }}>Freelance Full Stack Software Engineer</p>
             <div className="space-y-3">
               {[
-                { t: "A4G Collab Hub", d: "Contest platform for 200–1000+ participants — PayU payments, 5-track registration, Claude AI-screened judging." },
-                { t: "Recruitment Automation", d: "LinkedIn sourcing + a Claude Skills HR agent. Outreach cut from ~3 hrs to under 3 mins." },
-                { t: "YTZ Zoom Pipeline", d: "A 24/7 daemon for the Zoom recording lifecycle, eliminating ~4 hrs/week of manual video ops." },
+                { t: "Question Bank & Test Paper Generator", d: "29 REST routes, 3-tier RBAC, and an AI-assisted bulk-import pipeline for scanned question papers." },
+                { t: "Security & Performance", d: "Fixed a JWT algorithm-confusion vulnerability and an SSRF gap; cut median API latency from 3.5s to under 1s." },
+                { t: "Public Website", d: "Engineered the institute's public-facing site with scalable backend APIs, serving 3,000+ users." },
               ].map((item) => (
                 <div key={item.t} className="flex gap-3 items-start">
                   <div className="w-[3px] self-stretch rounded-full flex-shrink-0" style={{ background: "linear-gradient(to bottom,#ffd97a,#e89b1a)" }} />
@@ -809,14 +854,35 @@ function ExperienceSection() {
           </article>
 
           <article className="card-3d liquid-glass rounded-2xl p-6">
-            <p className="text-[10px] uppercase tracking-[0.25em] text-[var(--petal)]/75 mb-2">May 2026 – Jul 2026</p>
-            <h3 className="text-2xl text-white mb-1" style={{ fontFamily: serif }}>Varenyam Education Centre</h3>
-            <p className="text-sun text-base mb-4" style={{ fontFamily: serif }}>Freelance Full Stack Software Engineer</p>
+            <p className="text-[10px] uppercase tracking-[0.25em] text-[var(--petal)]/75 mb-2">Jan 2026 – Jun 2026</p>
+            <h3 className="text-2xl text-white mb-1" style={{ fontFamily: serif }}>Omysha Foundation</h3>
+            <p className="text-sun text-base mb-4" style={{ fontFamily: serif }}>Full Stack &nbsp;·&nbsp; AI Engineer Intern</p>
             <div className="space-y-3">
               {[
-                { t: "Question Bank & Test Paper Generator", d: "29 REST routes, 3-tier RBAC, and an AI-assisted bulk-import pipeline for scanned question papers." },
-                { t: "Security & Performance", d: "Fixed a JWT algorithm-confusion vulnerability and an SSRF gap; cut median API latency from 3.5s to under 1s." },
-                { t: "Public Website", d: "Engineered the institute's public-facing site with scalable backend APIs, serving 3,000+ concurrent users." },
+                { t: "A4G Collab Hub", d: "Contest platform for 200–1000+ participants — PayU payments, 5-track registration, Claude AI-screened judging." },
+                { t: "Recruitment Automation", d: "LinkedIn sourcing + a Claude Skills HR agent. Outreach cut from ~3 hrs to under 3 mins." },
+                { t: "YTZ Zoom Pipeline", d: "A Python + FastAPI + Gemini pipeline on AWS, eliminating ~4 hrs/week of manual video ops." },
+              ].map((item) => (
+                <div key={item.t} className="flex gap-3 items-start">
+                  <div className="w-[3px] self-stretch rounded-full flex-shrink-0" style={{ background: "linear-gradient(to bottom,#ffd97a,#e89b1a)" }} />
+                  <div>
+                    <p className="text-white text-[15px]" style={{ fontFamily: serif }}>{item.t}</p>
+                    <p className="text-white/60 text-[13px] leading-relaxed">{item.d}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <article className="card-3d liquid-glass rounded-2xl p-6">
+            <p className="text-[10px] uppercase tracking-[0.25em] text-[var(--petal)]/75 mb-2">Aug 2026 – Present</p>
+            <h3 className="text-2xl text-white mb-1" style={{ fontFamily: serif }}>CaratSense AI</h3>
+            <p className="text-sun text-base mb-4" style={{ fontFamily: serif }}>Software Developer Intern</p>
+            <div className="space-y-3">
+              {[
+                { t: "Production Software", d: "Production software for client businesses across backend codebases, APIs, and integrations." },
+                { t: "Backend Workflows", d: "Node.js services, REST APIs, webhooks, and RBAC — implementation through deployment." },
+                { t: "Production Firefighting", d: "Request routing, unsafe alert triggers, message delivery, and integration failures, traced and fixed live." },
               ].map((item) => (
                 <div key={item.t} className="flex gap-3 items-start">
                   <div className="w-[3px] self-stretch rounded-full flex-shrink-0" style={{ background: "linear-gradient(to bottom,#ffd97a,#e89b1a)" }} />
@@ -840,7 +906,7 @@ function ExperienceSection() {
               <div className="rounded-xl p-4" style={{ background: "rgba(255,217,122,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
                 <p className="text-[9px] uppercase tracking-[0.2em] text-[var(--petal)]/80 mb-2">Smart India Hackathon</p>
                 <p className="text-xl text-white mb-1" style={{ fontFamily: serif }}>Top 5</p>
-                <p className="text-white/60 text-xs">Internally, under pressure</p>
+                <p className="text-white/60 text-xs">Nationally, under pressure</p>
               </div>
             </div>
           </article>
@@ -968,7 +1034,7 @@ function ContactSection() {
         {/* Résumé CTA */}
         <div className="reveal mt-8">
           <a
-            href="https://drive.google.com/file/d/1BMwYGtcPx9faHjSS3yKmzExV3TPwDOTw/view?usp=sharing"
+            href="https://drive.google.com/file/d/1mXyYIa5_1d0oqWeGAUuYn6_7HBF7AVhd/view?usp=sharing"
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-sm font-medium transition-all duration-300"
@@ -1032,7 +1098,7 @@ function ContactSection() {
         </div>
         <div className="mt-12 pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
           <p className="text-[10px] uppercase tracking-[0.4em] text-white/20">Built with curiosity & code</p>
-          <p className="text-[10px] uppercase tracking-[0.4em] text-white/20">Sneha Chouksey © 2025</p>
+          <p className="text-[10px] uppercase tracking-[0.4em] text-white/20">Sneha Chouksey © 2026</p>
         </div>
       </div>
     </section>
@@ -1187,12 +1253,13 @@ function HomePage() {
 
       // Scene definitions: [id, inP, outP, xFrom, yFrom]
       const SCENES: [string, number, number, number, number][] = [
-        ["ch3-s1",  0.00, 0.16,  0,   32],
-        ["ch3-s2",  0.15, 0.34,  40,   0],
-        ["ch3-s3",  0.33, 0.58,  0,   32],
-        ["ch3-s3b", 0.57, 0.80,  0,   32],
-        ["ch3-s4",  0.79, 0.93,  0,   32],
-        ["ch3-s5",  0.92, 1.00,  0,   24],
+        ["ch3-s1",  0.00, 0.13,  0,   32],
+        ["ch3-s2",  0.12, 0.28,  40,   0],
+        ["ch3-s3",  0.27, 0.46,  0,   32],
+        ["ch3-s3b", 0.45, 0.64,  0,   32],
+        ["ch3-s3c", 0.63, 0.80,  0,   32],
+        ["ch3-s4",  0.79, 0.92,  0,   32],
+        ["ch3-s5",  0.91, 1.00,  0,   24],
       ];
 
       // Build quickSetters and hard-set everything invisible up front
@@ -1238,7 +1305,7 @@ function HomePage() {
       ScrollTrigger.create({
         trigger: ch3Sec,
         start: "top top",
-        end: "+=500%",
+        end: "+=600%",
         pin: true,
         anticipatePin: 1,
         invalidateOnRefresh: true,

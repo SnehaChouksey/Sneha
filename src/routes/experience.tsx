@@ -28,15 +28,15 @@ function ExperiencePage() {
           <div className="absolute -left-[3.4rem] top-10 w-4 h-4 rounded-full bg-[var(--sunflower)] pulse-glow hidden md:block" />
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-2 mb-6">
             <div>
-              <h2 className="text-3xl text-white" style={serif}>Freelance Full Stack Software Engineer</h2>
-              <p className="text-[var(--petal)]/80 mt-1">Varenyam Education Centre · Remote</p>
+              <h2 className="text-3xl text-white" style={serif}>Software Developer Intern</h2>
+              <p className="text-[var(--petal)]/80 mt-1">CaratSense AI · Mumbai, Remote</p>
             </div>
-            <p className="text-sm text-white/60">May 2026 — Jul 2026</p>
+            <p className="text-sm text-white/60">Aug 2026 — Present</p>
           </div>
           <ul className="space-y-4 text-sm text-white/85 leading-relaxed">
-            <li><span className="text-[var(--petal)]" style={serif}>Question Bank & Test Paper Generator · </span> Built end-to-end with Next.js, TypeScript, PostgreSQL, Prisma, Supabase, and the Gemini Vision API — 29 REST routes, 3-tier RBAC, and an AI-assisted bulk-import pipeline for scanned question papers.</li>
-            <li><span className="text-[var(--petal)]" style={serif}>Security & Performance · </span> Identified and fixed a JWT algorithm-confusion vulnerability and an SSRF gap; cut median API latency from 3.5s to under 1s via database/compute co-location and request-scoped caching.</li>
-            <li><span className="text-[var(--petal)]" style={serif}>Public Website · </span> Engineered the institute's public-facing site on Next.js with scalable backend APIs, serving 3,000+ concurrent users.</li>
+            <li><span className="text-[var(--petal)]" style={serif}>Production Software · </span> Develop and maintain production software for client businesses across backend codebases, APIs, and integrations.</li>
+            <li><span className="text-[var(--petal)]" style={serif}>Backend Workflows · </span> Build backend workflows with Node.js, REST APIs, webhooks, and RBAC, from implementation through deployment.</li>
+            <li><span className="text-[var(--petal)]" style={serif}>Production Debugging · </span> Investigate and fix live production issues: request routing, unsafe alert triggers, message delivery, and integration failures.</li>
           </ul>
         </article>
 
@@ -45,7 +45,7 @@ function ExperiencePage() {
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-2 mb-6">
             <div>
               <h2 className="text-3xl text-white" style={serif}>Full Stack & AI Engineer Intern</h2>
-              <p className="text-[var(--petal)]/80 mt-1">Omysha Foundation · A4G Collab · Remote</p>
+              <p className="text-[var(--petal)]/80 mt-1">Omysha Foundation · A4G Collab · Delhi, Remote</p>
             </div>
             <p className="text-sm text-white/60">Jan 2026 — Jun 2026</p>
           </div>
@@ -54,6 +54,22 @@ function ExperiencePage() {
             <li><span className="text-[var(--petal)]" style={serif}>Recruitment Automation · </span> Engineered a tool (Next.js, PostgreSQL, Drizzle ORM, Meta WhatsApp API, Gmail SMTP) with 2 Chrome extensions (MV3) for LinkedIn sourcing, cutting bulk outreach from ~3 hrs to under 3 mins across hundreds of candidates.</li>
             <li><span className="text-[var(--petal)]" style={serif}>YTZ Zoom Pipeline · </span> Architected a recording pipeline (Python, FastAPI, Gemini API, AWS): a 24/7 daemon eliminating ~4 hrs/week of manual video operations.</li>
             <li><span className="text-[var(--petal)]" style={serif}>Claude Skills HR Agent · </span> Built an HR Evaluation Agent scoring candidates on technical depth, communication, and org-fit, reducing evaluation time from ~1 day to under 5 mins per batch.</li>
+          </ul>
+        </article>
+
+        <article className="card-3d liquid-glass rounded-3xl p-8 mb-10 md:ml-12 relative">
+          <div className="absolute -left-[3.4rem] top-10 w-4 h-4 rounded-full bg-[var(--sunflower)]/40 hidden md:block" />
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-2 mb-6">
+            <div>
+              <h2 className="text-3xl text-white" style={serif}>Freelance Full Stack Software Engineer</h2>
+              <p className="text-[var(--petal)]/80 mt-1">Varenyam Education Centre · Indore, Remote</p>
+            </div>
+            <p className="text-sm text-white/60">Oct 2025 — Dec 2025</p>
+          </div>
+          <ul className="space-y-4 text-sm text-white/85 leading-relaxed">
+            <li><span className="text-[var(--petal)]" style={serif}>Question Bank & Test Paper Generator · </span> Built end-to-end with Next.js, TypeScript, PostgreSQL, Prisma, Supabase, and the Gemini Vision API — 29 REST routes, 3-tier RBAC, and an AI-assisted bulk-import pipeline for scanned question papers.</li>
+            <li><span className="text-[var(--petal)]" style={serif}>Security & Performance · </span> Identified and fixed a JWT algorithm-confusion vulnerability and an SSRF gap; cut median API latency from 3.5s to under 1s via database/compute co-location and request-scoped caching.</li>
+            <li><span className="text-[var(--petal)]" style={serif}>Public Website · </span> Engineered the institute's public-facing site on Next.js with scalable backend APIs, serving 3,000+ users.</li>
           </ul>
         </article>
 
@@ -81,7 +97,7 @@ function ExperiencePage() {
             </div>
             <div>
               <p className="text-xs uppercase tracking-[0.25em] text-[var(--petal)]/80">Smart India Hackathon</p>
-              <p className="mt-2 text-white">Top 5 internally. Shipped a full-stack AI prototype under the buzzer.</p>
+              <p className="mt-2 text-white">Top 5 nationally. Shipped a full-stack AI prototype under the buzzer.</p>
             </div>
             <div>
               <p className="text-xs uppercase tracking-[0.25em] text-[var(--petal)]/80">GirlScript Summer of Code 2026</p>

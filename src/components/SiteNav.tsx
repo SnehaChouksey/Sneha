@@ -60,8 +60,17 @@ export function SiteNav() {
         }}
       />
       <nav className="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-[min(96vw,580px)]">
-      {/* Main pill */}
-      <div className="liquid-glass rounded-full px-3 py-2 flex items-center justify-center">
+      {/* Main pill — .liquid-glass alone is a 1% white wash, which reads as nothing
+          on mobile where there's no backdrop strip below it. Tint it so the bar
+          stays legible over whatever section is scrolling past. */}
+      <div
+        className="liquid-glass rounded-full px-3 py-2 flex items-center justify-center"
+        style={{
+          background: "rgba(9,7,20,0.72)",
+          backdropFilter: "blur(18px)",
+          WebkitBackdropFilter: "blur(18px)",
+        }}
+      >
         {/* Desktop nav */}
         <ul className="hidden sm:flex items-center gap-0.5">
           {NAV_ITEMS.map((s) => {
@@ -97,7 +106,7 @@ export function SiteNav() {
 
         {/* Mobile: active section label + hamburger */}
         <div className="sm:hidden flex items-center justify-between w-full px-2">
-          <span className="text-xs uppercase tracking-[0.25em] text-white/60">
+          <span className="text-xs uppercase tracking-[0.25em] text-white/75">
             {NAV_ITEMS.find((s) => s.id === active)?.label ?? "menu"}
           </span>
           <button
@@ -113,20 +122,29 @@ export function SiteNav() {
         </div>
       </div>
 
-      {/* Mobile dropdown */}
+      {/* Mobile dropdown — deliberately NOT .liquid-glass: that's a near-transparent
+          1% white wash, which leaves the menu unreadable over bright page content.
+          This panel carries its own opaque surface so the labels always read. */}
       {menuOpen && (
         <div
-          className="sm:hidden mt-2 liquid-glass rounded-2xl overflow-hidden"
+          className="sm:hidden mt-2 rounded-2xl overflow-hidden"
           onClick={(e) => e.stopPropagation()}
+          style={{
+            background: "rgba(9,7,20,0.97)",
+            backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
+            border: "1px solid rgba(255,255,255,0.1)",
+            boxShadow: "0 18px 50px -12px rgba(0,0,0,0.85), inset 0 1px 0 rgba(255,255,255,0.06)",
+          }}
         >
           {NAV_ITEMS.map((s) => (
             <button
               key={s.id}
               onClick={() => scrollTo(s.id)}
-              className="w-full text-left px-5 py-3.5 text-sm uppercase tracking-[0.2em] border-b border-white/5 last:border-0"
+              className="w-full text-left px-5 py-3.5 text-sm uppercase tracking-[0.2em] border-b border-white/10 last:border-0"
               style={{
-                color: active === s.id ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.5)",
-                background: active === s.id ? "rgba(255,255,255,0.06)" : "transparent",
+                color: active === s.id ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.7)",
+                background: active === s.id ? "rgba(255,217,122,0.1)" : "transparent",
                 transition: "color 0.2s, background 0.2s",
               }}
             >

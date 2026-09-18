@@ -6,7 +6,24 @@ gsap.registerPlugin(ScrollTrigger);
 
 const serif = { fontFamily: "'Instrument Serif', serif" };
 
-const projects = [
+type Project = {
+  n: string;
+  name: string;
+  tag: string;
+  role: string;
+  body: string;
+  stack: string[];
+  /** Screenshot path under public/, or null for projects with no UI to show. */
+  img: string | null;
+  /** Fallback visual for img-less projects — rendered as a terminal readout. */
+  terminal?: { p: string; t: string; c: "ok" | "warn" | "dim" }[];
+  href?: string;
+  github: string;
+  bg: string;
+  glow: string;
+};
+
+const projects: Project[] = [
   {
     n: "01",
     name: "Acadlyst",
@@ -33,7 +50,54 @@ const projects = [
     bg: "#060f10",
     glow: "rgba(80,180,160,0.05)",
   },
+  {
+    n: "03",
+    name: "Corvid",
+    tag: "Autonomous AppSec Agent",
+    role: "Agentic AI · Security · Full-Stack",
+    body: "An autonomous AppSec agent that crawls an authorized target, hypothesizes vulnerabilities with an LLM, gates every active test behind human approval, and fires payloads from an egress-restricted E2B sandbox. Zero false positives across SQLi, JWT confusion, IDOR, and blind SSRF.",
+    stack: ["TypeScript", "LangGraph.js", "Next.js", "E2B", "PostgreSQL", "Redis"],
+    // No screenshot: Corvid is a CLI-driven agent, so the panel renders a
+    // terminal readout instead of a browser frame (see `terminal` below).
+    img: null,
+    terminal: [
+      { p: "▸", t: "crawl  https://target.authorized.test", c: "dim" },
+      { p: "◇", t: "hypothesis  IDOR · /api/orders/:id", c: "dim" },
+      { p: "⏸", t: "awaiting human approval …", c: "warn" },
+      { p: "▸", t: "payload fired  (E2B · egress-restricted)", c: "dim" },
+      { p: "✓", t: "VERIFIED  IDOR — CVSS 8.1", c: "ok" },
+      { p: "✓", t: "VERIFIED  blind SSRF — CVSS 7.5", c: "ok" },
+      { p: "·", t: "4 classes · 0 false positives", c: "dim" },
+    ],
+    href: undefined,
+    github: "https://github.com/SnehaChouksey/corvid",
+    bg: "#08060f",
+    glow: "rgba(150,120,255,0.06)",
+  },
 ];
+
+const TERMINAL_COLORS: Record<"ok" | "warn" | "dim", string> = {
+  ok: "rgba(120,230,170,0.85)",
+  warn: "rgba(255,217,122,0.85)",
+  dim: "rgba(255,255,255,0.42)",
+};
+
+/** Stand-in visual for projects that have no UI to screenshot. */
+function TerminalPanel({ lines }: { lines: NonNullable<Project["terminal"]> }) {
+  return (
+    <div
+      className="w-full h-full px-4 py-3 flex flex-col justify-center gap-[6px] font-mono"
+      style={{ background: "#07060d" }}
+    >
+      {lines.map((l) => (
+        <div key={l.t} className="flex items-start gap-2 text-[10px] leading-[1.5]">
+          <span style={{ color: TERMINAL_COLORS[l.c], opacity: 0.9 }}>{l.p}</span>
+          <span style={{ color: TERMINAL_COLORS[l.c] }}>{l.t}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export function HorizontalProjects() {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -179,8 +243,8 @@ export function HorizontalProjects() {
               style={{ background: `radial-gradient(ellipse 70% 50% at 50% 0%, ${p.glow} 0%, transparent 70%)` }}
             />
 
-            {/* Project image */}
-            {p.img && (
+            {/* Project image — or a terminal readout when there's no UI to show */}
+            {p.img ? (
               <div className="relative w-full" style={{ aspectRatio: "16/9", overflow: "hidden" }}>
                 <img
                   src={p.img}
@@ -194,7 +258,15 @@ export function HorizontalProjects() {
                   style={{ background: "linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.85) 100%)" }}
                 />
               </div>
-            )}
+            ) : p.terminal ? (
+              <div className="relative w-full" style={{ aspectRatio: "16/9", overflow: "hidden" }}>
+                <TerminalPanel lines={p.terminal} />
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{ background: "linear-gradient(to bottom, transparent 55%, rgba(0,0,0,0.75) 100%)" }}
+                />
+              </div>
+            ) : null}
 
             {/* Content */}
             <div className="relative z-10 p-6">
@@ -448,20 +520,26 @@ export function HorizontalProjects() {
                     className="ml-auto text-[8px] pr-1 font-mono"
                     style={{ color: "rgba(255,255,255,0.2)" }}
                   >
-                    {p.href?.replace("https://", "").split("/")[0] ?? "localhost"}
+                    {p.img
+                      ? (p.href?.replace("https://", "").split("/")[0] ?? "localhost")
+                      : `${p.name.toLowerCase()} — scan`}
                   </span>
                 </div>
                 <div style={{ aspectRatio: "16/10", overflow: "hidden" }}>
-                  <img
-                    src={p.img}
-                    alt={p.name}
-                    loading="lazy"
-                    className="w-full h-full object-cover object-top pointer-events-none"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src =
-                        "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop";
-                    }}
-                  />
+                  {p.img ? (
+                    <img
+                      src={p.img}
+                      alt={p.name}
+                      loading="lazy"
+                      className="w-full h-full object-cover object-top pointer-events-none"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src =
+                          "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop";
+                      }}
+                    />
+                  ) : (
+                    <TerminalPanel lines={p.terminal ?? []} />
+                  )}
                 </div>
               </div>
             </div>
